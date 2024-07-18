@@ -1,13 +1,14 @@
-<h1 align="center">The ARINC 853 "CSMIM" Knowledge Base</h1>
+<!-- <h1 align="center">The ARINC 853 "CSMIM" Knowledge Base</h1> -->
 <p align="center">
   <a href="https://github.com/ARINC-IA/CSMIM">
-    <img alt="CSMIM" title="CSMIM" src="" width="400">
+    <img alt="CSMIM" title="CSMIM" src="docs/csmim.png" width="300">
   </a>
 </p>
 
-Welcome to the Knowledge Base of the "Cabin Secure Media-Independent Messaging" Protocol.
+Welcome to the **ARINC 853 Knowledge Base** for the "Cabin Secure Media-Independent Messaging" Protocol.
 This repository contains standardized interface descriptions for aircraft cabin equipment.
 Here, the aerospace industry collaborates to shape the cabin network of the future.
+
 
 ## Introduction
 
@@ -16,7 +17,7 @@ communication protocol for non-essential cabin equipment. The protocol specifica
 from related standards in the building and home automation domain, including
 [MQTT](https://mqtt.org/) and [CBOR](https://cbor.io/) as building blocks. Whereas the
 ARINC 853 document describes the generic protocol and data structure, this
-repository -- the CSMIM Knowledge Base -- contains concrete interface definitions for
+repository &ndash; the CSMIM Knowledge Base &ndash; contains concrete interface definitions for
 various cabin equipment. These definitions are considered "standard" and should be used
 by all cabin equipment suppliers as far as possible.
 
@@ -24,18 +25,43 @@ The goal of our activities is to enable interoperability of all cabin equipment 
 types of aircraft, and to create an open aircraft cabin network where any supplier can
 add new, useful functions.
 
-## Organization and Contributing
+
+## How to get started
+
+You should have a basic understanding of the ARINC 853 standard itself, in particular of its
+chapter 6.2 which describes the CSMIM abstract data model. This repository primarily contains
+a list of standardized *CSMIM object types*, which are specified in ARINC 853 §6.2.7. The
+object types are located in the [types/ folder](types/) as files in
+[YAML](https://en.wikipedia.org/wiki/YAML) format.
+
+- **If you search for object types:**
+  Use the "Go to file" search box and input the object type
+  identifier or simply phrases of interest. For example, input "light" to find object types
+  concerned with cabin lighting. The search results will include the types
+  (`types/csmim.obj.*.yaml`) plus all potential locations for objects instantiated from
+  these types (`path/.../csmim.obj.*.yaml`).
+
+- **If you could not find an object type matching your requirements:**
+  Try searching the [issues](https://github.com/ARINC-IA/CSMIM/issues) for your requirements.
+  Maybe someone is already working on your topic, and you can join an existing discussion.
+  If the topic is new: Create an issue, describe your requirements and label it a "question".
+
+- **If you want to propose a new object type or enhance an existing one:**
+  Create an issue, describe your requirements and label it an "enhancement". If there are
+  existing object types similar to what you need, mention them and explain what is
+  missing for you and how the type should be enhanced.
+
+  If you have a very concrete proposal, you can fork this repository and add
+  the YAML file specifying your object type. Never edit an existing file &ndash;
+  once standardized, an object type cannot be changed. Always create a new file,
+  possibly with the same name and increased version number. Then create a pull
+  request.
+
+
+## Who maintains this repository?
 
 This repository is owned by SAE ITC, the organization behind ARINC. The repository is managed
-by the members of CSMIM working group, which belongs to the
-[ARINC Cabin Systems Subcomittee](https://aviation-ia.sae-itc.com/subcommittees/cabin-systems-subcommittee).
-Every ARINC member company can become active in the Cabin Systems Subcomitee and join the
+by the members of *CSMIM working group*, which belongs to the
+[ARINC Cabin Systems Subcommittee](https://aviation-ia.sae-itc.com/subcommittees/cabin-systems-subcommittee).
+Every ARINC member company can become active in the Cabin Systems Subcommittee and join the
 CSMIM working group.
-
-But you can contribute if you are not an ARINC member, too. Create an issue or join an existing
-discussion to work towards standardizing your cabin equipment's CSMIM interfaces. Please
-have a look at [our rules and process for contributions](CONTRIBUTING.md).
-
-## Getting Help
-
-To be continued.
