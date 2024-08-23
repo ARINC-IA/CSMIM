@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="625.79767"
+   height="129.36325"
+   viewBox="0 0 625.79767 129.36325"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
+   sodipodi:docname="contribute-add.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:pageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="px"
+     showgrid="false"
+     inkscape:zoom="0.93619792"
+     inkscape:cx="442.21418"
+     inkscape:cy="53.941585"
+     inkscape:window-width="1920"
+     inkscape:window-height="1140"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1"
+     lock-margins="true"
+     fit-margin-top="2"
+     fit-margin-left="2"
+     fit-margin-right="2"
+     fit-margin-bottom="2" />
+  <defs
+     id="defs2">
+    <marker
+       style="overflow:visible"
+       id="Arrow2Mend"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(-0.6)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path26677" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Mend-2"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(-0.6)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path26677-2" />
+    </marker>
+  </defs>
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-287.20643,-220.17919)">
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow2Mend)"
+       d="m 321.51773,253.99828 c 0.12299,16.72447 52.75571,27.68114 83.73224,28.45319"
+       id="path26568"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow2Mend)"
+       d="m 557.96752,280.95127 h 64.30894"
+       id="path27088"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.999999px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow2Mend)"
+       d="m 709.63349,280.72663 c 18.41182,-0.0535 20.19799,-34.99798 64.26725,-34.87823"
+       id="path27416"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.999999px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow2Mend-2)"
+       d="m 709.63349,280.72663 c 18.41182,0.0535 20.19799,34.99798 64.26725,34.87824"
+       id="path27416-8"
+       sodipodi:nodetypes="cc" />
+    <text
+       xml:space="preserve"
+       style="font-size:13.3333px;line-height:1.25;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans'"
+       x="288.52643"
+       y="232.3125"
+       id="text9890"><tspan
+         sodipodi:role="line"
+         id="tspan9888"
+         x="288.52643"
+         y="232.3125">Supplier or</tspan><tspan
+         sodipodi:role="line"
+         x="288.52643"
+         y="248.97913"
+         id="tspan9892">Developer</tspan></text>
+    <g
+       id="g26277"
+       transform="translate(3.1630859,-22.670952)">
+      <rect
+         style="fill:#afdde9;stroke:#2c89a0;stroke-linecap:square"
+         id="rect25532"
+         width="151.13705"
+         height="62.943672"
+         x="403.66318"
+         y="272.14078" />
+      <text
+         xml:space="preserve"
+         style="font-size:13.3333px;line-height:1.25;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans'"
+         x="422.13861"
+         y="298.74597"
+         id="text12866"><tspan
+           sodipodi:role="line"
+           id="tspan12864"
+           x="422.13861"
+           y="298.74597">Search knowledge</tspan><tspan
+           sodipodi:role="line"
+           x="422.13861"
+           y="315.4126"
+           id="tspan12868">base for types</tspan></text>
+    </g>
+    <g
+       id="g26271"
+       transform="translate(68.874877,-22.670952)">
+      <rect
+         style="fill:#afdde9;stroke:#2c89a0;stroke-width:0.999998;stroke-linecap:square"
+         id="rect25532-7"
+         width="86.178993"
+         height="62.943672"
+         x="554.80023"
+         y="272.14078" />
+      <text
+         xml:space="preserve"
+         style="font-size:13.3333px;line-height:1.25;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans'"
+         x="576.44983"
+         y="300.2793"
+         id="text14984"><tspan
+           sodipodi:role="line"
+           id="tspan14982"
+           x="576.44983"
+           y="300.2793">Search </tspan><tspan
+           sodipodi:role="line"
+           x="576.44983"
+           y="316.94592"
+           id="tspan14986">issues</tspan></text>
+    </g>
+    <g
+       id="g26259"
+       transform="translate(71.193115,26.426178)">
+      <rect
+         style="fill:#ffeeaa;stroke:#aa8800;stroke-width:1;stroke-linecap:square"
+         id="rect25532-5-9"
+         width="134.93819"
+         height="47.257889"
+         x="704.3728"
+         y="196.4147" />
+      <text
+         xml:space="preserve"
+         style="font-size:13.3333px;line-height:1.25;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans'"
+         x="733.55542"
+         y="224.8903"
+         id="text18818"><tspan
+           sodipodi:role="line"
+           x="733.55542"
+           y="224.8903"
+           id="tspan18820">Create issue</tspan></text>
+    </g>
+    <g
+       id="g26265"
+       transform="translate(71.193115,-27.848221)">
+      <rect
+         style="fill:#fff6d5;stroke:#aa8800;stroke-width:0.999998;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:3.99999, 3.99999;stroke-dashoffset:0"
+         id="rect25532-5"
+         width="134.93819"
+         height="62.943672"
+         x="704.3728"
+         y="311.94699" />
+      <text
+         xml:space="preserve"
+         style="font-size:13.3333px;line-height:1.25;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans';fill:#808080"
+         x="722.89545"
+         y="338.55219"
+         id="text21268"><tspan
+           sodipodi:role="line"
+           x="722.89545"
+           y="338.55219"
+           id="tspan21270">Fork and create</tspan><tspan
+           sodipodi:role="line"
+           x="722.89545"
+           y="355.21881"
+           id="tspan24262">pull request</tspan></text>
+    </g>
+  </g>
+</svg>

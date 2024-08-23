@@ -1,5 +1,7 @@
 # How to contribute to CSMIM
 
+![Steps for filing an issue](docs/contribute-add.svg)
+
 Would you like to see an interface standardized as a CSMIM object type?
 Or do you wish to enhance or change an existing type?
 
@@ -27,3 +29,29 @@ Do you have a very concrete proposal for an object type?
   and increased version number. **Then create a pull request.**
 
 Thank you for your efforts that will help to improve the CSMIM standard!
+
+
+
+## How is your contribution processed?
+
+![Process for changing the CSMIM knowledge base](docs/contribute-process.svg)
+
+1. The CSMIM working group discusses new issues internally and publicly on
+   Github with you. This serves to get a better understanding of your
+   requirements.
+
+2. If new object types are proposed as a result from the discussion, we will
+   create a branch and a pull request. We will attempt to gather more
+   industry experts for the topic at hand, in order to reach a good consensus
+   on the proposed interface. We will discuss and refine the proposed object
+   types with you in the pull request.
+
+3. If sufficient discussions have taken place and all comments are resolved,
+   the proposal will be locked and voted on by the CSMIM working group.
+
+4. If enough votes were in favor of the proposal, the new object types are
+   accepted into the standard. We merge the pull request into the main branch.
+
+5. If the proposed object types are rejected, we archive the pull request and
+   associated discussions for later reference. Given enough interest, the
+   topic can be revived in the future.
