@@ -12,7 +12,8 @@ Here, the aerospace industry collaborates to shape the cabin network of the futu
 
 ## Introduction
 
-This repository complements the ARINC 853 "CSMIM" standard. ARINC 853 specifies a modern
+This repository complements the [ARINC 853 "CSMIM" standard](https://aviation-ia.sae-itc.com/standards/arinc853-853-cabin-secure-media-independent-messaging-csmim-protocol).
+ARINC 853 specifies a modern
 communication protocol for non-essential cabin equipment. The protocol specification draws
 from related standards in the building and home automation domain, including
 [MQTT](https://mqtt.org/) and [CBOR](https://cbor.io/) as building blocks. Whereas the
@@ -51,11 +52,11 @@ object types are located in the [types/ folder](types/) as files in
   existing object types similar to what you need, mention them and explain what is
   missing for you and how the type should be enhanced.
 
-  If you have a very concrete proposal, you can fork this repository and add
-  the YAML file specifying your object type. Never edit an existing file &ndash;
-  once standardized, an object type cannot be changed. Always create a new file,
-  possibly with the same name and increased version number. Then create a pull
-  request.
+- **If you want to publish manufacturer-specific extensions:**
+  To publish your manufacturer-specific object types, fork this repository and add your
+  manufacturer-specific definitions there. Make sure not to change any existing type.
+  Always create new files. Add your manufacturer code to the object type identifier as
+  required by the CSMIM standard. Derive from standard types wherever possible.
 
 
 ## Who maintains this repository?

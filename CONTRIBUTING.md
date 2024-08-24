@@ -19,14 +19,9 @@ Or do you wish to enhance or change an existing type?
 
 Do you have a very concrete proposal for an object type?
 
-- **Usually it is better to open an issue** and describe your requirements
-  instead of directly proposing an object type YAML, because we will have to
-  discuss the rationale of the object type's details in any case.
-
-- **Fork this repository and add the YAML file specifying your object type.**
-  Never edit an existing file &ndash; once standardized, an object type
-  cannot be changed. Always create a new file, possibly with the same name
-  and increased version number. **Then create a pull request.**
+- **Open an issue anyways** and describe your requirements instead of directly
+  proposing an object type YAML, because we will have to discuss the rationale
+  of the object type's details in any case.
 
 Thank you for your efforts that will help to improve the CSMIM standard!
 
@@ -40,14 +35,13 @@ Thank you for your efforts that will help to improve the CSMIM standard!
    Github with you. This serves to get a better understanding of your
    requirements.
 
-2. If new object types are proposed as a result from the discussion, we will
-   create a branch and a pull request. We will attempt to gather more
-   industry experts for the topic at hand, in order to reach a good consensus
-   on the proposed interface. We will discuss and refine the proposed object
-   types with you in the pull request.
+2. If new object types are proposed as a result from the discussion, work will
+   be done in a dedicated branch and pull request, which is linked to the issue.
+   We will attempt to gather more industry experts for the topic at hand, in
+   order to reach a good consensus on the proposed interface.
 
 3. If sufficient discussions have taken place and all comments are resolved,
-   the proposal will be locked and voted on by the CSMIM working group.
+   the proposal is locked and voted on by the CSMIM working group.
 
 4. If enough votes were in favor of the proposal, the new object types are
    accepted into the standard. We merge the pull request into the main branch.

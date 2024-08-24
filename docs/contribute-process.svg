@@ -3,8 +3,8 @@
 
 <svg
    width="752.92596"
-   height="186.69133"
-   viewBox="0 0 752.92596 186.69133"
+   height="217.20389"
+   viewBox="0 0 752.92596 217.20389"
    version="1.1"
    id="svg5"
    inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
@@ -23,11 +23,11 @@
      inkscape:pagecheckerboard="0"
      inkscape:document-units="px"
      showgrid="false"
-     inkscape:zoom="0.46809896"
-     inkscape:cx="452.89569"
-     inkscape:cy="265.9694"
-     inkscape:window-width="1920"
-     inkscape:window-height="1140"
+     inkscape:zoom="0.93619792"
+     inkscape:cx="432.06676"
+     inkscape:cy="97.201669"
+     inkscape:window-width="1366"
+     inkscape:window-height="708"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
@@ -280,5 +280,10 @@
          x="475.92993"
          y="378.26022"
          id="tspan43376">CSMIM WG</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow2Mend)"
+       d="m 541.97235,282.65898 c 60.20593,-0.90383 23.00969,153.4276 81.75825,153.4276 h 311.07495 c 49.35726,0 26.26798,-107.67613 77.44915,-107.67613"
+       id="path411"
+       sodipodi:nodetypes="cssc" />
   </g>
 </svg>
