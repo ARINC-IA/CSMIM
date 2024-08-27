@@ -1,6 +1,8 @@
 import glob
 import re
+import pytest
 import yaml
+import yamale
 
 
 # generate test cases for all files in the types folder
@@ -9,19 +11,21 @@ def pytest_generate_tests(metafunc):
     metafunc.parametrize("typeFile", filelist)
 
 
-# check that the filename of all type definitions is conform to the specification
-def test_filename_pattern(typeFile):
-    assert (
-        re.match(r"types/csmim\.obj\..[a-z0-9_\-\.]+\.\d+\.yaml$", typeFile) is not None
-    )
+# check the structure of type files matches the CSMIM schema
+def test_csmim_schema(typeFile):
+    try:
+        csmim_schema = yamale.make_schema(".github/workflows/csmim_schema.yaml")
+        data = yamale.make_data(typeFile)
+        yamale.validate(csmim_schema, data)
+    except Exception as e:
+        print(e)
+        pytest.fail("Schema missmatch")
 
 
 # check the id of all type files matches the filename
 def test_id_matches(typeFile):
     fd = open(typeFile, "r")
     ty = yaml.safe_load(fd)
-    assert "id" in ty
-    assert isinstance(ty["id"], str)
     assert typeFile == "types/" + ty["id"] + ".yaml"
 
 
@@ -36,13 +40,13 @@ def test_supertypes_exist(typeFile):
 
 # recursive helper function to go through the tree of referenced files and check
 # each file is only visited once
-def check_cycle(filename, parameter, visited):
+def check_cycle(filename, visited=set()):
     try:
         visited.add(filename)
         fd = open(filename, "r")
         filecontent = yaml.safe_load(fd)
-        if parameter in filecontent:
-            for next in filecontent[parameter]:
+        if "supertypes" in filecontent:
+            for next in filecontent["supertypes"]:
                 next = "types/" + next + ".yaml"
                 if next in visited:
                     return False
@@ -56,4 +60,4 @@ def check_cycle(filename, parameter, visited):
 
 # check there is no cyclic dependencies in referenced supertypes
 def test_supertype_cycles(typeFile):
-    assert check_cycle(typeFile, "supertypes", set()) is True
+    assert check_cycle(typeFile, set()) is True
