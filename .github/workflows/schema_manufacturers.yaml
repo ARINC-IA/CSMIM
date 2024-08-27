@@ -1,0 +1,4 @@
+id: regex('[A-Z]{3}')
+description: str()
+website: str(required=False)
+contact: str(required=False)

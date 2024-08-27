@@ -1,9 +1,9 @@
-id: regex('^csmim\.obj\..[a-z0-9_\-\.]+\.\d+$')
+id: regex('^csmim\\.obj\\.[a-z0-9_\\-.]+\\.\\d+$')
 supertypes: list(required=False)
 description: str()
 deprecated: bool(required=False)
 attributes: list(include('attribute'), required=False)
-resources: list(include('resource'))
+resources: list(include('resource'), required=False)
 
 ---
 attribute:
@@ -19,4 +19,4 @@ resource:
   mandatory: bool(required=False)
   description: str()
   enum-values: map(required=False)
-  parameters: list(include('attribute'))
+  parameters: list(include('attribute'), required=False)

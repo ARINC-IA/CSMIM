@@ -7,19 +7,26 @@ import yamale
 
 # generate test cases for all files in the types folder
 def pytest_generate_tests(metafunc):
-    filelist = glob.glob("types/*")
-    metafunc.parametrize("typeFile", filelist)
+    if "typeFile" in metafunc.fixturenames:
+        filelist = glob.glob("types/*")
+        metafunc.parametrize("typeFile", filelist)
+    if "manufacturerFile" in metafunc.fixturenames:
+        filelist = glob.glob("manufacturers/*")
+        metafunc.parametrize("manufacturerFile", filelist)
+
+
+# check the structure of manufacturer files matches the schema
+def test_manufacturers_schema(manufacturerFile):
+    schema = yamale.make_schema(".github/workflows/schema_manufacturers.yaml")
+    data = yamale.make_data(manufacturerFile)
+    yamale.validate(schema, data)
 
 
 # check the structure of type files matches the CSMIM schema
 def test_csmim_schema(typeFile):
-    try:
-        csmim_schema = yamale.make_schema(".github/workflows/csmim_schema.yaml")
-        data = yamale.make_data(typeFile)
-        yamale.validate(csmim_schema, data)
-    except Exception as e:
-        print(e)
-        pytest.fail("Schema missmatch")
+    schema = yamale.make_schema(".github/workflows/schema_csmim.yaml")
+    data = yamale.make_data(typeFile)
+    yamale.validate(schema, data)
 
 
 # check the id of all type files matches the filename
@@ -27,6 +34,13 @@ def test_id_matches(typeFile):
     fd = open(typeFile, "r")
     ty = yaml.safe_load(fd)
     assert typeFile == "types/" + ty["id"] + ".yaml"
+
+
+# check the id of all manufacturer files matches the filename
+def test_id_matches(manufacturerFile):
+    fd = open(manufacturerFile, "r")
+    my = yaml.safe_load(fd)
+    assert manufacturerFile == "manufacturers/" + my["id"] + ".yaml"
 
 
 # check referenced supertypes exist and are not empty
