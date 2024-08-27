@@ -16,4 +16,4 @@ jobs:
           pip install -r .github/workflows/requirements.txt
       - name: Test with pytest
         run: |
-          pytest .github/workflows/test-csmim-syntax.py
+          pytest .github/workflows/test-csmim-syntax.py -v
