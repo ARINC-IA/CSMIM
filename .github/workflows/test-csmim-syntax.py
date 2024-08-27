@@ -30,14 +30,14 @@ def test_csmim_schema(typeFile):
 
 
 # check the id of all type files matches the filename
-def test_id_matches(typeFile):
+def test_types_id_matches(typeFile):
     fd = open(typeFile, "r")
     ty = yaml.safe_load(fd)
     assert typeFile == "types/" + ty["id"] + ".yaml"
 
 
 # check the id of all manufacturer files matches the filename
-def test_id_matches(manufacturerFile):
+def test_manufacturer_id_matches(manufacturerFile):
     fd = open(manufacturerFile, "r")
     my = yaml.safe_load(fd)
     assert manufacturerFile == "manufacturers/" + my["id"] + ".yaml"

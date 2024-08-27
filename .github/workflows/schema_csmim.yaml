@@ -1,5 +1,5 @@
-id: regex('^csmim\\.obj\\.[a-z0-9_\\-.]+\\.\\d+$')
-supertypes: list(required=False)
+id: regex('^csmim\\.obj\\.[a-z0-9\\-.]+\\.\\d+$')
+supertypes: list(matches=regex('^csmim\\.obj\\.[a-z0-9\\-.]+\\.\\d+$'), required=False)
 description: str()
 deprecated: bool(required=False)
 attributes: list(include('attribute'), required=False)
@@ -8,15 +8,44 @@ resources: list(include('resource'), required=False)
 ---
 attribute:
   key: str()
-  type: enum('void', 'enum', 'string', 'integer', 'bool', required=False)
   mandatory: bool(required=False)
+  description: str()
+
+parameter:
+  key: str()
+  type: enum(
+    'void',
+    'raw',
+    'bool', 'bool[]',
+    'int', 'int[]',
+    'uint', 'uint[]',
+    'float','float[]',
+    'string','string[]',
+    'bytes','bytes[]',
+    'enum','enum[]',
+    'utc','utc[]',
+    'dict','dict[]',
+    required=False)
+  optional: bool(required=False)
   description: str()
 
 resource:
   id: str()
-  mode: enum('r', 'w', 'x')
-  type: enum('void', 'enum', 'string', 'integer', 'bool')
+  mode: any('r', 'w', 'rw', 'x')
+  type: enum(
+    'void',
+    'raw',
+    'bool', 'bool[]',
+    'int', 'int[]',
+    'uint', 'uint[]',
+    'float','float[]',
+    'string','string[]',
+    'bytes','bytes[]',
+    'enum','enum[]',
+    'utc','utc[]',
+    'dict','dict[]')
   mandatory: bool(required=False)
   description: str()
   enum-values: map(required=False)
-  parameters: list(include('attribute'), required=False)
+  parameters: list(include('parameter'), required=False)
+
