@@ -1,18 +1,16 @@
 import glob
-import re
-import pytest
 import yaml
 import yamale
+import os.path
 
 
-# helper function: loads an object type file
-def load_object_type(typeFile):
-    fd = open(typeFile, "r")
+# helper function: loads a yaml file
+def load_object_type(yamlFile):
+    fd = open(yamlFile, "r")
     return yaml.safe_load(fd)
 
 
-
-# generate test cases for all files in the types folder
+# generate test cases for all files
 def pytest_generate_tests(metafunc):
     if "typeFile" in metafunc.fixturenames:
         filelist = glob.glob("types/*")
@@ -20,7 +18,9 @@ def pytest_generate_tests(metafunc):
     if "manufacturerFile" in metafunc.fixturenames:
         filelist = glob.glob("manufacturers/*")
         metafunc.parametrize("manufacturerFile", filelist)
-
+    if "pathFile" in metafunc.fixturenames:
+        filelist = glob.glob("path/**/*", recursive=True)
+        metafunc.parametrize("pathFile", filelist)
 
 
 # check the structure of manufacturer files matches the schema
@@ -45,9 +45,8 @@ def test_type_id_matches(typeFile):
 
 # check the id of all manufacturer files matches the filename
 def test_manufacturer_id_matches(manufacturerFile):
-    fd = open(manufacturerFile, "r")
-    my = yaml.safe_load(fd)
-    assert manufacturerFile == "manufacturers/" + my["id"] + ".yaml"
+    content = load_object_type(manufacturerFile)
+    assert manufacturerFile == "manufacturers/" + content["id"] + ".yaml"
 
 
 # check referenced supertypes exist and are not empty
@@ -56,6 +55,22 @@ def test_supertypes_exist(typeFile):
     if "supertypes" in content:
         for supertype in content["supertypes"]:
             assert len(glob.glob("types/" + supertype + ".yaml")) == 1
+
+
+# check all files in the path folder are softlinks
+def test_path_are_softlinks(pathFile):
+    assert os.path.islink(pathFile) or os.path.isdir(pathFile)
+
+
+# check all links in the path folder are valid
+def test_path_links_valid(pathFile):
+    if os.path.islink(pathFile):
+        target = os.readlink(pathFile)
+        # must be relative symlink
+        assert not os.path.isabs(target)
+        # Resolve relative path
+        target = os.path.join(os.path.dirname(pathFile), target)
+        assert os.path.exists(target)
 
 
 # recursive helper function to go through the tree of referenced files and check
@@ -83,12 +98,12 @@ def test_resource_enum_values(typeFile):
     content = load_object_type(typeFile)
     for resource in content["resources"]:
         if resource["type"] == "enum":
-            assert "enum-values" in resource          
-    
+            assert "enum-values" in resource
+
 
 # check that 'parameters' are defined for all executable resources
 def test_resource_parameters(typeFile):
     content = load_object_type(typeFile)
     for resource in content["resources"]:
         if resource["mode"] == "x":
-            assert "parameters" in resource          
+            assert "parameters" in resource
