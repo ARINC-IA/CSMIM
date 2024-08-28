@@ -2,6 +2,7 @@ import glob
 import yaml
 import yamale
 import os.path
+import re
 
 
 # helper function: loads a yaml file
@@ -76,6 +77,12 @@ def test_path_links_valid(pathFile):
         assert os.path.basename(target) == os.path.basename(pathFile)
 
 
+# check that paths use only valid characters
+def test_path_dirs_valid(pathFile):
+    if os.path.isdir(pathFile):
+        assert re.fullmatch("[A-Za-z0-9\\-\\._]+", os.path.basename(pathFile))
+
+
 # recursive helper function: iterate the tree of referenced files and check that
 # each file is only visited once
 def has_supertypes_cycle(typeFile, visited):
@@ -95,11 +102,16 @@ def has_supertypes_cycle(typeFile, visited):
 def is_optional(resource):
     return ("optional" in resource) and (resource["optional"] is True)
 
+# helper function: whether the resource is marked "restricted access"
+def is_racc(resource):
+    return ("racc" in resource) and (resource["racc"] is True)
+
 
 # helper function: check that the resource overwrite is valid
 # more checks would be possible, e.g. parameters are a subset
 def check_resource_overwrite_valid(resource, overwrite):
     assert is_optional(resource) or not is_optional(overwrite)
+    assert is_racc(resource) == is_racc(overwrite)
     assert overwrite["mode"].count(resource["mode"]) == 1
     assert overwrite["type"] == resource["type"]
 
@@ -149,6 +161,14 @@ def test_resource_parameters(typeFile):
             assert "parameters" in resource
         else:
             assert "parameters" not in resource
+
+
+# check that read- or writeable resources are not type void
+def test_resource_type(typeFile):
+    content = load_object_type(typeFile)
+    for resource in content["resources"]:
+        if resource["mode"] in {"r", "w", "rw"}:
+            assert resource["type"] != "void"
 
 
 # helper function: returns a dictionary containing all resource IDs of the given

@@ -30,7 +30,7 @@ parameter:
   description: str()
 
 resource:
-  id: str()
+  id: regex('^[A-Za-z0-9\\-._~]+$')
   mode: any('r', 'w', 'rw', 'x')
   type: enum(
     'void',
@@ -45,6 +45,7 @@ resource:
     'utc','utc[]',
     'dict','dict[]')
   optional: bool(required=False)
+  racc: bool(required=False)
   description: str()
   enum-values: map(required=False)
   parameters: list(include('parameter'), required=False)
