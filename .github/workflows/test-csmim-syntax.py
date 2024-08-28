@@ -71,6 +71,9 @@ def test_path_links_valid(pathFile):
         # Resolve relative path
         target = os.path.join(os.path.dirname(pathFile), target)
         assert os.path.exists(target)
+        target = os.path.normpath(target)
+        assert os.path.dirname(target) == "types"
+        assert os.path.basename(target) == os.path.basename(pathFile)
 
 
 # recursive helper function: iterate the tree of referenced files and check that
