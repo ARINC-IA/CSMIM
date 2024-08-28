@@ -73,24 +73,59 @@ def test_path_links_valid(pathFile):
         assert os.path.exists(target)
 
 
-# recursive helper function to go through the tree of referenced files and check
+# recursive helper function: iterate the tree of referenced files and check that
 # each file is only visited once
 def has_supertypes_cycle(typeFile, visited):
     visited.add(typeFile)
     content = load_object_type(typeFile)
     if "supertypes" in content:
-        for nextId in content["supertypes"]:
-            nextFile = "types/" + nextId + ".yaml"
-            if nextFile in visited:
+        for supertype in content["supertypes"]:
+            supertypeFile = "types/" + supertype + ".yaml"
+            if supertypeFile in visited:
                 return True
-            if has_supertypes_cycle(nextFile, visited):
+            if has_supertypes_cycle(supertypeFile, visited):
                 return True
     return False
 
 
+# helper function: whether the resource is marked optional
+def is_optional(resource):
+    return ("optional" in resource) and (resource["optional"] is True)
+
+
+# helper function: check that the resource overwrite is valid
+# more checks would be possible, e.g. parameters are a subset
+def check_resource_overwrite_valid(resource, overwrite):
+    assert is_optional(resource) or not is_optional(overwrite)
+    assert overwrite["mode"].count(resource["mode"]) == 1
+    assert overwrite["type"] == resource["type"]
+
+
+# recursive helper function: iterate the tree of supertypes and check that
+# resource overwrites are valid and that there are no conflicts
+def has_resource_conflict(typeFile, resources):
+    content = load_object_type(typeFile)
+    myResources = {}
+    if "supertypes" in content:
+        for nextId in content["supertypes"]:
+            if has_resource_conflict("types/" + nextId + ".yaml", myResources):
+                return True
+    for resource in content["resources"]:
+        if resource["id"] in myResources:
+            check_resource_overwrite_valid(myResources[resource["id"]], resource)
+        myResources[resource["id"]] = resource
+    conflict = resources.keys() & myResources.keys()
+    if conflict:
+        print("conflicting resource(s) ", conflict)
+        return True
+    resources |= myResources
+    return False
+
+
 # check there is no cyclic dependencies in referenced supertypes
-def test_supertypes_cycle(typeFile):
+def test_supertypes_valid(typeFile):
     assert not has_supertypes_cycle(typeFile, set())
+    assert not has_resource_conflict(typeFile, {})
 
 
 # check that 'enum-values' are defined for all resources of type 'enum'
