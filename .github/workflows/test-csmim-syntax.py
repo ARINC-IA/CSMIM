@@ -146,3 +146,45 @@ def test_resource_parameters(typeFile):
             assert "parameters" in resource
         else:
             assert "parameters" not in resource
+
+
+# helper function: returns a dictionary containing all resource IDs of the given
+# object type file, including those of all its supertypes
+def load_object_type_resources(yamlFile, visited):
+    visited.add(yamlFile)
+    content = load_object_type(yamlFile)
+    result = {}
+    if "supertypes" in content:
+        for supertype in content["supertypes"]:
+            if not supertype in visited:
+                result |= load_object_type_resources("types/" + supertype + ".yaml", visited)
+    for resource in content["resources"]:
+        result[resource["id"]] = content["id"]
+    return result
+
+
+# recursive helper function: checks that there is no subdirectory in the given
+# path that has the same name as a resource of any of the linked object types in
+# the given path
+def has_path_conflict_in(path):
+    resources = {}
+    for entry in glob.glob(path + "/*"):
+        if os.path.islink(entry):
+            try:
+                resources |= load_object_type_resources(entry, set())
+            except:
+                print("ignoring", entry)
+    result = False
+    for entry in glob.glob(path + "/*"):
+        if os.path.isdir(entry):
+            if os.path.basename(entry) in resources:
+                print("conflict:", entry, "is a resource of", resources[os.path.basename(entry)])
+                result = True
+            result |= has_path_conflict_in(entry)
+    return result
+
+
+# check that no resource of any of the object types linked in the "path/"
+# directory can conflict with another object's path
+def test_path_conflicts():
+    assert not has_path_conflict_in("path")
