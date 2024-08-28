@@ -8,7 +8,7 @@ resources: list(include('resource'), required=False)
 ---
 attribute:
   key: str()
-  mandatory: bool(required=False)
+  optional: bool(required=False)
   description: str()
 
 parameter:
@@ -44,7 +44,7 @@ resource:
     'enum','enum[]',
     'utc','utc[]',
     'dict','dict[]')
-  mandatory: bool(required=False)
+  optional: bool(required=False)
   description: str()
   enum-values: map(required=False)
   parameters: list(include('parameter'), required=False)
