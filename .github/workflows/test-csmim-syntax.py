@@ -160,7 +160,9 @@ def load_object_type_resources(yamlFile, visited):
     if "supertypes" in content:
         for supertype in content["supertypes"]:
             if not supertype in visited:
-                result |= load_object_type_resources("types/" + supertype + ".yaml", visited)
+                result |= load_object_type_resources(
+                    "types/" + supertype + ".yaml", visited
+                )
     for resource in content["resources"]:
         result[resource["id"]] = content["id"]
     return result
@@ -181,7 +183,12 @@ def has_path_conflict_in(path):
     for entry in glob.glob(path + "/*"):
         if os.path.isdir(entry):
             if os.path.basename(entry) in resources:
-                print("conflict:", entry, "is a resource of", resources[os.path.basename(entry)])
+                print(
+                    "conflict:",
+                    entry,
+                    "is a resource of",
+                    resources[os.path.basename(entry)],
+                )
                 result = True
             result |= has_path_conflict_in(entry)
     return result
