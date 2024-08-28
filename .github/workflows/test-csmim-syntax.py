@@ -99,6 +99,8 @@ def test_resource_enum_values(typeFile):
     for resource in content["resources"]:
         if resource["type"] == "enum":
             assert "enum-values" in resource
+        else:
+            assert "enum-values" not in resource
 
 
 # check that 'parameters' are defined for all executable resources
@@ -107,3 +109,5 @@ def test_resource_parameters(typeFile):
     for resource in content["resources"]:
         if resource["mode"] == "x":
             assert "parameters" in resource
+        else:
+            assert "parameters" not in resource
