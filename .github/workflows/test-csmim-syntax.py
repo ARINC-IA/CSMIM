@@ -80,7 +80,7 @@ def test_path_links_valid(pathFile):
 # check that paths use only valid characters
 def test_path_dirs_valid(pathFile):
     if os.path.isdir(pathFile):
-        assert re.fullmatch("[A-Za-z0-9\\-\\._]+", os.path.basename(pathFile))
+        assert re.fullmatch("[A-Za-z0-9\\-._]+", os.path.basename(pathFile))
 
 
 # recursive helper function: iterate the tree of referenced files and check that
@@ -101,6 +101,7 @@ def has_supertypes_cycle(typeFile, visited):
 # helper function: whether the resource is marked optional
 def is_optional(resource):
     return ("optional" in resource) and (resource["optional"] is True)
+
 
 # helper function: whether the resource is marked "restricted access"
 def is_racc(resource):
