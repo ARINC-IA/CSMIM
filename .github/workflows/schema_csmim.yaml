@@ -1,0 +1,48 @@
+id: include('type_id')
+supertypes: list(include('type_id'), required=False)
+description: str()
+deprecated: bool(required=False)
+attributes: list(include('attribute'), required=False)
+resources: list(include('resource'), required=False)
+
+---
+type_id: regex('^csmim\\.obj\\.[a-z0-9\\-.]+\\.\\d+$')
+
+attribute:
+  key: str()
+  optional: bool(required=False)
+  description: str()
+
+resource:
+  id: regex('^[A-Za-z0-9\\-._~]+$')
+  mode: any('r', 'w', 'rw', 'x')
+  type: include('resource_type')
+  optional: bool(required=False)
+  racc: bool(required=False)
+  description: str()
+  enum-values: list(include('enum_value'), required=False)
+  parameters: list(include('parameter'), required=False)
+
+enum_value:
+  key: int(min=0)
+  name: str()
+  description: str(required=False)
+
+parameter:
+  key: str()
+  type: include('resource_type')
+  optional: bool(required=False)
+  description: str()
+
+resource_type: enum(
+  'void',
+  'raw',
+  'bool', 'bool[]',
+  'int', 'int[]', 'int[][]',
+  'uint', 'uint[]', 'uint[][]',
+  'float', 'float[]', 'float[][]',
+  'string', 'string[]',
+  'bytes', 'bytes[]',
+  'enum', 'enum[]',
+  'utc', 'utc[]',
+  'dict', 'dict[]')
