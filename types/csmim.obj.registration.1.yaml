@@ -1,0 +1,21 @@
+id: csmim.obj.registration.1
+supertypes: []
+description: CSMIM Registration service interface
+attributes: []
+resources:
+  - id: claim
+    mode: x
+    type: void
+    parameters:
+      - key: etag
+        type: bytes
+      - key: types
+        type: dict[]
+      - key: objects
+        type: dict[]
+  - id: renew
+    mode: x
+    type: void
+    parameters:
+      - key: etag
+        type: bytes
