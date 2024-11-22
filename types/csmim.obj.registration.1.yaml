@@ -1,21 +1,86 @@
+%YAML 1.2
+---
 id: csmim.obj.registration.1
 supertypes: []
-description: CSMIM Registration service interface
+description: CSMIM registration service interface as specified in ARINC 853
 attributes: []
 resources:
   - id: claim
     mode: x
     type: void
+    description: >-
+      Requests a full registration for the CSMIM endpoint. Either the endpoint
+      has not performed a successful full registration yet, or the registration
+      data differs from the last full registration.
     parameters:
       - key: etag
         type: bytes
+        description: Entity tag for this registration; size <= 8 bytes
       - key: types
         type: dict[]
+        description: List of object types used by this registration message
+        # dict-values:
+        #  - key: id
+        #    type: string
+        #  - key: supertypes
+        #    type: string[]
+        #  - key: resources
+        #    type: dict[]
+        #    dict-values:
+        #      - key: id
+        #        type: string
+        #      - key: type
+        #        type: string
+        #      - key: mode
+        #        type: string
+        #      - key: optional
+        #        type: bool
+        #        optional: true
+        #      - key: racc
+        #        type: bool
+        #        optional: true
       - key: objects
         type: dict[]
+        description: List of objects to be registered
+        # dict-values:
+        #  - key: path
+        #    type: string
+        #  - key: type
+        #    type: string
+        #  - key: discoverable
+        #    type: bool
+        #    optional: true
+        #  - key: racc
+        #    type: string[][]
+        #    optional: true
+        #  - key: rmod
+        #    type: string[][]
+        #    optional: true
+        #  - key: resources
+        #    type: dict[]
+        #    dict-values:
+        #      - key: id
+        #        type: string
+        #      - key: mode
+        #        type: string
+        #        optional: true
+        #      - key: discoverable
+        #        type: bool
+        #        optional: true
+        #      - key: racc
+        #        type: string[][]
+        #        optional: true
+        #      - key: rmod
+        #        type: string[][]
+        #        optional: true
+
   - id: renew
     mode: x
     type: void
+    description: >-
+      Requests renewal of the last successful full registration for the
+      endpoint. Preferred to full registration, if possible.
     parameters:
       - key: etag
         type: bytes
+        description: Entity tag of the full registration to be recalled

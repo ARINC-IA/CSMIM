@@ -1,0 +1,57 @@
+%YAML 1.2
+---
+id: csmim.obj.directory.1
+supertypes: []
+description: >-
+  CSMIM resource directory service. The resource directory announces
+  registration and removal of objects in the CSMIM network depending on the
+  types of the objects. To this avail, the resource directory has an internal
+  list of "object types of interest". Whenever an object is registered which is
+  derived from one of these types of interest, the resource directory publishes
+  a message to announce the path of that object. It does so using the MQTT
+  extended topic feature of ARINC 853, publishing the message under the
+  "csmim.obj" resource. When an object vanishes which was derived from one of
+  the types of interest, the resource directory publishes an empty message to
+  the same extended topic.
+
+  There is currently no mechanism for a client to add an object type to the
+  list of types of interest. The list is statically configured. It should
+  contain only few entries so as to reduce the number of messages that have to
+  be published by the resource directory, in particular at network startup.
+
+  The resource directory always resides at the path "core/csmim/directory".
+attributes: []
+resources:
+  - id: csmim.obj
+    mode: r
+    type: string[]
+    description: >-
+      This resource serves to announce registration and removal of objects that
+      are derived from one of the "object types of interest". Announcements are
+      published using one MQTT message per type of interest and per object.
+
+      The registration of an object is announced by publishing a retained
+      message with QoS "at least once" in the extended topic
+      "csmim.obj/type/object-path". The "type" is the object type ID of the
+      object type of interest, minus the "csmim.obj" prefix. The "object-path"
+      is the full path to the object. The payload of the message is the list of
+      all object types implemented by the object, identical to the "types" field
+      of the ICD message for the object. If the object is derived from multiple
+      types of interest, the resource directory publishes one message for each
+      of these.
+
+      The removal of an object which was derived from a type of interest is
+      announced by publishing a retained message with empty payload to the same
+      extended topic. This publication also removes the retained message from
+      the MQTT broker.
+
+      Example: Some CSMIM endpoint registers a new object under the path
+      "crew/galley/x5" with the object type "csmim.obj.galley.1" and the
+      supertype "csmim.obj.fault-report.1". That supertype has been configured
+      as a type of interest. Then, the directory service will publish a message
+      at the path "core/csmim/directory/csmim.obj/fault-report.1/crew/galley/x5"
+      with the payload ["csmim.obj.galley.1","csmim.obj.fault-report.1"].
+
+      A client that wants to be informed about all objects that are derived from
+      "csmim.obj.fault-report.1" can subscribe the path
+      "core/csmim/directory/csmim.obj/fault-report.1/#".
