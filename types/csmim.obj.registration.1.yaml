@@ -2,16 +2,28 @@
 ---
 id: csmim.obj.registration.1
 supertypes: []
-description: CSMIM registration service interface as specified in ARINC 853
+description: >-
+  CSMIM registration service interface as specified in ARINC 853.
+
+  Clients should follow a certain procedure when connecting to the MQTT broker
+  and registering at the CSMIM network. The goal is to reuse a stored MQTT
+  session whenever possible; if not, attempt a registration renewal if possible;
+  and only if that fails or is impossible, perform a full registration. To
+  achieve this goal, the client must set the "sessionExpiryInterval" and the
+  "cleanSession" parameters in the MQTT CONNECT message properly, and evaluate
+  the "sessionPresent" parameter in the CONNACK message it receives.
+
 attributes: []
 resources:
   - id: claim
     mode: x
     type: void
     description: >-
-      Requests a full registration for the CSMIM endpoint. Either the endpoint
-      has not performed a successful full registration yet, or the registration
-      data differs from the last full registration.
+      Requests a full registration for the CSMIM endpoint. Clients must do a
+      full registration if the endpoint has not performed a successful full
+      registration yet, or the registration data differs from the previous full
+      registration. In both cases, the client must have set "cleanSession=true"
+      in its MQTT CONNECT message.
     parameters:
       - key: etag
         type: bytes
@@ -19,14 +31,14 @@ resources:
       - key: types
         type: dict[]
         description: List of object types used by this registration message
-        # dict-values:
+        # dict-items:
         #  - key: id
         #    type: string
         #  - key: supertypes
         #    type: string[]
         #  - key: resources
         #    type: dict[]
-        #    dict-values:
+        #    dict-items:
         #      - key: id
         #        type: string
         #      - key: type
@@ -42,7 +54,7 @@ resources:
       - key: objects
         type: dict[]
         description: List of objects to be registered
-        # dict-values:
+        # dict-items:
         #  - key: path
         #    type: string
         #  - key: type
@@ -58,7 +70,7 @@ resources:
         #    optional: true
         #  - key: resources
         #    type: dict[]
-        #    dict-values:
+        #    dict-items:
         #      - key: id
         #        type: string
         #      - key: mode
@@ -79,8 +91,15 @@ resources:
     type: void
     description: >-
       Requests renewal of the last successful full registration for the
-      endpoint. Preferred to full registration, if possible.
+      endpoint. Clients should do a registration renewal if the registration
+      data is unchanged from the last successful full registration and the MQTT
+      CONNACK packet indicated "sessionPresent=false", that is, if the attempt
+      to recover the client's stored session at the MQTT broker failed. In any
+      case, the client should have set "cleanSession=false" in its MQTT CONNECT
+      message. If, however, CONNACK returned "sessionPresent=true", the session
+      including the client's previous registration has been recovered, and the
+      client must not perform registration renewal.
     parameters:
       - key: etag
         type: bytes
-        description: Entity tag of the full registration to be recalled
+        description: Entity tag of the full registration to be renewed
