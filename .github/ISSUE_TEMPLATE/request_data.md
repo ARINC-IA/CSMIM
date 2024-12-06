@@ -20,11 +20,11 @@ For which kind of equipment and intended usage do you need additional data?
 List existing types if they are related but fail to meet your needs.
 
 **Required data:**
-List the additional data that you require to be published by other subsystems.
+List the additional data items that you require to be published by other 
+subsystems.
 
- - [ ] title of requested data item 1
- - [ ] title of requested data item 2
+ - [ ] requested data item 1
+ - [ ] requested data item 2
 
 Elaborate on your list and possible sources.
 Add requirements on accuracy or frequency if relevant to you.
-
