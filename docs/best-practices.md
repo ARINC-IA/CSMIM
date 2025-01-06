@@ -39,6 +39,14 @@ Use the `string` data type to capture a potentially infinite number of states.
 Values are typically not processed by another device on the aircraft (displaying
 a string to a human does not constitute "processing").
 
+Use an array or `dict` data type to group multiple data items that depend on
+each other, that means, data items that must be transmitted atomically in order
+to ensure validity of the combined value. <br />
+*Rationale:* Data integrity. <br />
+*Example:* Velocity or acceleration would use an array. A timestamp made of 
+hour, minute and second would use a dict. On the other hand, flight phase and 
+altitude would be separate resources.
+
 Use a writable resource if the resource has a single "value" that can be
 changed. Make sure that the operation is idempotent (multiple WRITE requests
 have the same effect as a single one). If this is not the case, you must use an
@@ -57,9 +65,39 @@ part of a galley. The object representing a galley insert cannot have its path
 below an object representing the MGCU, because a galley insert is not contained
 in an MGCU.
 
+Choose object paths in such a way that MQTT topic name filters can be put to
+good use.
+
+Use the security domain as the first element of a CSMIM object path. 
+Valid domains are currently `core`, `crew`, `pax`. <br />
+*Rationale:* Together with registration access rules configured in the CSMIM 
+central services, this guarantees a certain authenticity of published data.
+
+Use the system's ATA chapter name as the second element of a CSMIM object path. 
+<br />
+*Rationale:* Together with registration access rules configured in the CSMIM
+central services, this guarantees a certain authenticity of published data.
+
+Consider using the ATA subchapter name as the third element of a CSMIM 
+object path. <br />
+*Note:* CSMIM central services will typically not restrict registration access
+on ATA subchapter granularity.
+
 Restrict object paths to use only lower-case characters and the underscore,
 except for equipment IDs (e.g. Airbus FIN). <br />
 *Rationale:* This avoids lower-case/upper-case confusion.
 
-Use `.../collection/<id>` as an object path element to capture a collection of
-similar objects. The collection name should be a plural noun. <br />
+Use `.../<collection-name>/<instance-id>` as an object path element to capture a
+collection of similar objects. The collection name should be a plural noun.
+The instance ID will be defined by the aircraft manufacturer in many cases.
+<br />
+*Example:* `.../galleys/M5/gains/208` (two nested collections)
+
+
+## Message Payloads
+
+Do not publish personal data, i.e. data that is subject to data privacy
+protection legislations such as the European GDPR, on public resources. Use an
+access-restricted topic instead, or publish anonymized data on a public topic
+and a decoding table on an access-restricted topic. Use the MQTT message user
+property `privacyData` as described in ARINC 853 §6.3.4.7.
