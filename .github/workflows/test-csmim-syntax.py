@@ -26,14 +26,14 @@ def pytest_generate_tests(metafunc):
 
 # check the structure of manufacturer files matches the schema
 def test_manufacturers_schema(manufacturerFile):
-    schema = yamale.make_schema(".github/workflows/schema_manufacturers.yaml")
+    schema = yamale.make_schema(".github/schema/manufacturers.yaml")
     data = yamale.make_data(manufacturerFile)
     yamale.validate(schema, data)
 
 
 # check the structure of type files matches the CSMIM schema
 def test_object_type_schema(typeFile):
-    schema = yamale.make_schema(".github/workflows/schema_csmim.yaml")
+    schema = yamale.make_schema(".github/schema/csmim.yaml")
     data = yamale.make_data(typeFile)
     yamale.validate(schema, data)
 
