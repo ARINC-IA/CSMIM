@@ -1,0 +1,39 @@
+%YAML 1.2
+---
+id: csmim.obj.seat.actuator.1
+supertypes:
+  - csmim.obj.fault-reporter.1
+  - csmim.obj.operational_status.1
+description: >
+  Class for actuator within the cabin. Specific data from manufacturer shall be
+  handled within derived classes. Register at path
+  crew/seats/<row>/<seat>/actuators/<actuatorid>
+attributes:
+  - key: seat
+    description: Position name of the installation location of the seat within
+      the aircraft cabin, e.g. A
+  - key: row
+    description: Row number of the installation location of the seat within the
+      aircraft cabin, e.g. 11.
+  - key: actuatorid
+    description: ID of the actuator.
+resources:
+  - id: obstruction_flag
+    mode: r
+    type: bool
+    description: True, if obstruction was detected in last motion. Flag will be
+      reset when a new motion starts.
+  - id: position
+    mode: r
+    type: float
+    description: Current position of the actuator. Position value in percentage
+      of travel 0 – 100% (e.g. 42.5%  = 0.425)
+  - id: movement_status
+    mode: r
+    type: enum
+    description: Status of actuator movement.
+    enum-values:
+      stopped: 0     # Actuator is stopped. No movement.
+      forward: 1     # Actuator is moving towards maximum position 100%
+      backward: 2    # Actuator is moving towards minimum position 0%
+      retrograde: 3  # Entrapment detected, actuator is moving reverse

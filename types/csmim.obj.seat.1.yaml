@@ -1,0 +1,127 @@
+%YAML 1.2
+---
+id: csmim.obj.seat.1
+supertypes:
+  - csmim.obj.sas_operational_status.1
+  - csmim.obj.seat.occupied_status.1
+  - csmim.obj.fault-reporter.1
+description: >
+  Class for the overall status of a seat within the cabin. The seat could be any
+  type of seat. Register at path crew/seats/<row>/<seat>
+attributes:
+  - key: seat
+    description: Position name of the installation location of the seat within
+      the aircraft cabin, e.g. A
+  - key: row
+    description: Row number of the installation location of the seat within the
+      aircraft cabin, e.g. 11.
+resources:
+  - id: seat_position
+    mode: r
+    type: enum
+    description: >
+      Seat position for predefined positions. The seat may of only a subset of
+      positions and the enumeration may be extended in the future.
+    enum-values:
+      undefined: 0  # seat is not in a defined seat a position. e.g. seat is in TTl, but legrest is up
+      ttl: 1  # seat is in TTL position
+      ttl2: 2  # the seat has mor than one TTL positions. The status of safe for TTL is indicated via additional resource safe_for_ttl
+      Dine: 3  # seat is in dine position
+      relax: 4  # seat is in relax position
+      relax2: 5  # seat may have a second relax position
+      bed: 6  # seat is in bed position
+      user_stored: 7  # In case of a user management. Seat is in user stored preset position
+      dot_disabled_person: 8  # seat is in a position for disabled person
+      cleaning: 9  # seat is in position for cleaning
+  - id: safe_for_ttl
+    mode: r
+    type: bool
+    description: >
+      All criteria for safe to flight on seat/suit level is fulfilled. e.g. seat
+      is in TTL position all furniture is correctly stored.
+  - id: ttl_lock
+    mode: rw
+    type: bool
+    optional: true
+    description: >
+      Seat can't moved out of TTL. May be only commands into TTL position are
+      allowed. The lockout feature can be set via the interface or another key
+      line.
+  - id: child_lockout
+    mode: rw
+    type: bool
+    optional: true
+    description: >
+      Feature to disable seat movements, if the seat is occupied via a child.
+      Feature shall be activated/deactivated from crew.
+  - id: safety_event
+    mode: r
+    type: enum
+    description: Last safety related event on seat / suit level
+    enum-values:
+      none: 0  # No safety event
+      seat_obstruction: 1  # Obstruction event on seat level has occurred
+      door_obstruction: 2  # Obstruction event on the door has occurred
+      divider_obstruction: 3  # Obstruction event on divider has occurred
+  - id: motion_cmd
+    mode: x
+    parameters:
+      - key: mode
+        type: enum
+        enum-values:
+          cyclic: 1  # Commands needs to be send cyclic. Otherwise motion will stop.
+          once: 2  # Command is only send one time. Seat moves to desired position (One touch feature)
+        description: Mode defines how seat actuation system reacts on command
+      - key: part
+        type: enum
+        enum-values:
+          seat: 1  # Motion is for the complete seat
+          legrest: 2  # Legrest of the seat
+          seatpan: 3  # Seatpan of the seat
+          backrest: 4  # Backrest of the seat
+          upper_backrest: 5  # Upper backrest of the seat
+          head_rest: 6  # Head rest of the seat
+          sidearm: 7  # Side arm of the seat
+          seattrack: 8  # Seat tracking of the seat
+          ottoman: 9  # Ottoman of the seat
+          privacy_divider: 10  # Privacy divider of the seat
+        description: Defines which part of the seat, whole seat or furniture has
+          to be moved
+      - key: direction
+        type: enum
+        enum-values:
+          stop: 0  # stops all motion
+          ttl: 1  # Seat moves to TTL position
+          ttl2: 2  # Second position in case seat supplier has qualified a second position
+          dine: 3  # Dine position
+          relax: 4  # Relax postion
+          relax2: 5  # Second relax position
+          bed: 6  # bed position
+          user_stored: 7  # In case the seat actuation system has user defined positions stored, the seat is moving to that position.
+          dot_disabled_person: 8  # Special postion for disabled persons to get in the seat.
+          cleaning: 9  # Cleaning position
+          up: 10  # Motion upwards
+          down: 11  # Motion downwards
+          in: 12  # Motion in the in direction
+          out: 13  # Motion in the out direction
+          forward: 14  # Motion in the forward direction
+          backward: 15  # motion in the backward direction
+          rotate_clockwise: 16  # rotate in clockwise direction
+          rotate_counterclockwise: 17  # rotate counterclockwise
+          lefthand_up: 18  # move lefthand side up e.g. arm rest
+          lefthand_down: 19  # move lefthand side down e.g. arm rest
+          righthand_up: 20  # move rightthand side up e.g. arm rest
+          righthand_down: 21  # move righthand side down e.g. arm rest
+        description: Direction of the motion. Note Not all directions are
+          possible with each part. In case of the motion is not supported a NAK
+          message is sent.
+      - key: source
+        type: string
+        description: Identifies the source. E.g. Local IFE in the seat or crew
+          panel. Key is used to prioritize commands from different sources.
+    type: void
+    optional: true
+    description: >
+      Motion command to change seat position. Only one command at the same time
+      is allowed. In case, that a dedicated motion command is not supported, a
+      NAK message shall be sent. The enumeration may be extended in the future.
