@@ -1,0 +1,26 @@
+%YAML 1.2
+---
+id: csmim.obj.seat.occupied-status.1
+supertypes: []
+description: >
+  An interface which describes the occupied status of a seat within the cabin.
+attributes: []
+
+resources:
+  - id: occupied_status
+    mode: r
+    type: enum
+    description: Describes the occupied status of a seat.
+    enum-values:
+      - name: none
+        key: 0
+        description: Seat is empty
+      - name: occupied
+        key: 1
+        description: Seat is occupied with person
+      - name: baggage
+        key: 2
+        description: Baggage is detected on seat
+      - name: unknown
+        key: 3
+        description: Signal from sensor is indefinite
