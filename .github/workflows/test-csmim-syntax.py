@@ -164,6 +164,18 @@ def test_resource_parameters(typeFile):
             assert "parameters" not in resource
 
 
+# check that 'enum-values' are defined for all parameters of type 'enum'
+def test_resource_parameters_enum_values(typeFile):
+    content = load_object_type(typeFile)
+    for resource in content["resources"]:
+        if "parameters" in resource:
+            for parameter in resource["parameters"]:
+                if parameter["type"] == "enum":
+                    assert "enum-values" in parameter
+                else:
+                    assert "enum-values" not in parameter
+
+
 # check that read- or writeable resources are not type void
 def test_resource_type(typeFile):
     content = load_object_type(typeFile)
