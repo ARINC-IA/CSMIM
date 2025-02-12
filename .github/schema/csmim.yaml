@@ -33,6 +33,7 @@ parameter:
   type: include('resource_type')
   optional: bool(required=False)
   description: str()
+  enum-values: list(include('enum_value'), required=False)
 
 resource_type: enum(
   'void',
