@@ -20,7 +20,11 @@ def pytest_generate_tests(metafunc):
         filelist = glob.glob("manufacturers/*")
         metafunc.parametrize("manufacturerFile", filelist)
     if "pathFile" in metafunc.fixturenames:
-        filelist = glob.glob("path/**/*", recursive=True)
+        filelist = [
+            file
+            for file in glob.glob("path/**/*", recursive=True)
+            if os.path.basename(file) not in ["README.md"]
+        ]
         metafunc.parametrize("pathFile", filelist)
 
 
