@@ -80,7 +80,18 @@ def test_path_links_valid(pathFile):
 # check that paths use only valid characters
 def test_path_dirs_valid(pathFile):
     if os.path.isdir(pathFile):
-        assert re.fullmatch("<?[A-Za-z0-9\\-._]+>?", os.path.basename(pathFile))
+        assert re.fullmatch(
+            "<?[A-Za-z0-9\\-._]+>?", os.path.basename(pathFile)
+        ), "path contains invalid characters"
+
+
+# check that path domain and service use only FQDN chars
+# rationale: for compatibility with authentification certificates
+def test_path_domsys_fqdn(pathFile):
+    if os.path.isdir(pathFile) and os.path.normpath(pathFile).count(os.sep) == 2:
+        assert re.fullmatch(
+            "path(/[A-Za-z0-9\\-.]+){2}", os.path.normpath(pathFile)
+        ), "domain/system path contains invalid characters"
 
 
 # recursive helper function: iterate the tree of referenced files and check that
