@@ -14,18 +14,20 @@ _example:_ an aircraft data recorder can publish flight deck data, and the cargo
 **v1/airline**
 according to the A664P5 airline information services domain
 
-_example:_ a container load, a galley insert sensor, or passenger and cabin attendant seats can publish operational data to this domain
+_example:_ a container load, a galley insert sensor, or passenger and cabin attendant seats can publish operational data to this domain.
+The on-board airline application publishes the latest passenger list (received from ground) to this domain.
 
 **v1/passenger**
 according to the A664P5 passenger information and entertainment services domain
 
-_example:_ the passenger flight information center can inform about connecting flights, meal and entertainment options. also passengers can communicate meal orders via the in-seat screen in this domain
+_example:_ the passenger flight information center can inform about connecting flights, meal and entertainment options.
+Also passengers can communicate meal orders via the in-seat screen in this domain
 
 **v1/periphery**
 according to the A664P5 passenger owned devices domain, but also for additional assets, that are not covered by the previous domains
 
 _example:_ a passenger mobile device publishes a gaming request, or seat actuation request. A portable ground maintenance device collects data,
-a temporary sensor publishes humidity measurements, or an airport finger collects information.
+a temporary sensor publishes humidity measurements, or an airport finger collects information. A portable cabin crew device publishes a change of the passenger list.
 
 **v1/core**
 for CSMIM internal message channels
