@@ -5,63 +5,61 @@ supertypes:
   - csmim.obj.sas-operational-status.1
   - csmim.obj.seat.occupied-status.1
   # - csmim.obj.fault-reporter.1  # Does not exist yet
-description: >
+description: >-
   Class for the overall status of a seat within the cabin. The seat could be any
-  type of seat. Register at path crew/seats/<row>/<seat>
+  type of seat. Register at path airline/furnishing/seats/<row>/<seat>
+
 attributes:
-  - key: seat
-    description: Position name of the installation location of the seat within
-      the aircraft cabin, e.g. A
   - key: row
     description: Row number of the installation location of the seat within the
-      aircraft cabin, e.g. 11.
+      aircraft cabin, e.g. "11".
+  - key: seat
+    description: Position name of the installation location of the seat within
+      the aircraft cabin, e.g. "A".
 
 resources:
   - id: seat_position
     mode: r
     type: enum
-    description: >
-      Seat position for predefined positions. The seat may of only a subset of
-      positions and the enumeration may be extended in the future.
+    description: >-
+      Seat position for predefined positions. A particular seat model may
+      support only a subset of the positions. The enumeration may be extended in
+      the future, therefore clients must be able to handle other values than
+      those defined here for upward compatibility.
     enum-values:
       - name: undefined
         key: 0
-        description: The seat is not in a defined seat position. E.g. seat is in
-          TTl, but leg rest is up
+        description: The seat is not in a defined seat position. E.g. the seat
+          is in TTL position, but the leg rest is up.
       - name: ttl
         key: 1
-        description: The seat is in TTL position
+        description: The seat is in TTL position. You must not use this as an
+          indication for the seat being safe for TTL; use the "safe_for_ttl"
+          resource instead.
       - name: ttl2
         key: 2
-        description: The seat has more than one TTL position. The status of safe
-          for TTL is indicated via additional resource safe_for_ttl
       - name: dine
         key: 3
-        description: The seat is in dine position
       - name: relax
         key: 4
-        description: The seat is in relax position
       - name: relax2
         key: 5
-        description: A seat may have a second relax position
       - name: bed
         key: 6
-        description: The seat is in bed position
       - name: user_stored
         key: 7
-        description: In case of user management. The seat is in user-stored
-          preset position
+        description: The seat is in a user-stored preset position.
       - name: dot_disabled_person
         key: 8
-        description: The seat is in a position for disabled person
+        description: The seat is in a position for disabled persons to get in
+          the seat.
       - name: cleaning
         key: 9
-        description: The seat is in position for cleaning
 
   - id: safe_for_ttl
     mode: r
     type: bool
-    description: >
+    description: >-
       All criteria for safe to flight on seat/suit level are fulfilled. E.g. the
       seat is in TTL position and all furniture is correctly stored.
 
@@ -69,8 +67,8 @@ resources:
     mode: rw
     type: bool
     optional: true
-    description: >
-      The seat can't be moved out of TTL. May be only commands into TTL position
+    description: >-
+      The seat cannot be moved out of TTL. Maybe only commands into TTL position
       are allowed. The lockout feature can be set via the interface or another
       key line.
 
@@ -78,36 +76,34 @@ resources:
     mode: rw
     type: bool
     optional: true
-    description: >
+    description: >-
       Feature to disable seat movements, if the seat is occupied with a child.
       Feature shall be activated/deactivated from crew.
 
   - id: safety_event
     mode: r
     type: enum
-    description: The ast safety-related event on seat / suit level
+    description: The last safety-related event on seat / suit level.
     enum-values:
       - name: none
         key: 0
-        description: No safety event
       - name: seat_obstruction
         key: 1
-        description: Obstruction event on seat level has occurred
       - name: door_obstruction
         key: 2
-        description: Obstruction event on the door has occurred
       - name: divider_obstruction
         key: 3
-        description: Obstruction event on divider has occurred
 
   - id: motion_cmd
     mode: x
     type: void
     optional: true
-    description: >
+    description: >-
       Motion command to change seat position. Only one command at the same time
-      is allowed. In case, that a dedicated motion command is not supported, a
-      NAK message shall be sent. The enumeration may be extended in the future.
+      is allowed. The seat will send a code 400 response if the combination of
+      "part" and "direction" parameters is invalid. The seat will send a code
+      501 response if the specified "part" or "direction" are not supported by
+      this particular seat model.
     parameters:
       - key: mode
         type: enum
@@ -115,123 +111,89 @@ resources:
         enum-values:
           - name: cyclic
             key: 1
-            description: Commands needs to be sent cyclically. Otherwise, the#
+            description: Commands needs to be sent cyclically, otherwise the
               motion will stop.
           - name: once
             key: 2
-            description: Command is only sent one time. Seat moves to desired
-              position (one touch feature).
+            description: Command needs to be sent only once. The seat will move
+              to the desired position.
       - key: part
         type: enum
-        description: Defines which part of the seat, whole seat or furniture has
-          to be moved
+        description: Defines whether the whole seat is to be moved, or a
+          specific part of the seat or furniture. This enumeration may be
+          extended in the future.
         enum-values:
           - name: seat
             key: 1
-            description: Motion is for the complete seat
           - name: leg_rest
             key: 2
-            description: Leg rest of the seat
           - name: seat_pan
             key: 3
-            description: Seat pan of the seat
           - name: back_rest
             key: 4
-            description: Back rest of the seat
           - name: upper_back_rest
             key: 5
-            description: Upper back rest of the seat
           - name: head_rest
             key: 6
-            description: Head rest of the seat
           - name: sidearm
             key: 7
-            description: Side arm of the seat
           - name: seat_track
             key: 8
-            description: Seat tracking of the seat
           - name: ottoman
             key: 9
-            description: Ottoman of the seat
           - name: privacy_divider
             key: 10
-            description: Privacy divider of the seat
       - key: direction
         type: enum
-        description: Direction of the motion. Note that not all directions are
-          possible with each part. In case the motion is not supported, a NAK
-          response will be sent.
+        description: Direction of the motion. This enumeration may be extended
+          in the future, analogous to the "seat_position" enumeration.
         enum-values:
           - name: stop
             key: 0
-            description: Stops all motion
           - name: ttl
             key: 1
-            description: Seat moves to TTL position
           - name: ttl2
             key: 2
-            description: Seat moves to second TTL position, in case the seat
-              supplier has qualified a second position
           - name: dine
             key: 3
-            description: Dine position
           - name: relax
             key: 4
-            description: Relax position
           - name: relax2
             key: 5
-            description: Second relax position
           - name: bed
             key: 6
-            description: Bed position
           - name: user_stored
             key: 7
-            description: In case the seat actuation system has user-defined
-              positions stored, the seat is moving to that position
           - name: dot_disabled_person
             key: 8
-            description: Special postion for disabled persons to get in the seat
           - name: cleaning
             key: 9
-            description: Cleaning position
           - name: up
-            key: 10
-            description: Motion upwards
+            key: 100
           - name: down
-            key: 11
-            description: Motion downwards
+            key: 101
           - name: in
-            key: 12
-            description: Motion in the in direction
+            key: 102
           - name: out
-            key: 13
-            description: Motion in the out direction
+            key: 103
           - name: forward
-            key: 14
-            description: Motion in the forward direction
+            key: 104
           - name: backward
-            key: 15
-            description: Motion in the backward direction
+            key: 105
           - name: rotate_clockwise
-            key: 16
-            description: Rotate in clockwise direction
+            key: 106
           - name: rotate_counterclockwise
-            key: 17
-            description: Rotate counterclockwise
+            key: 107
           - name: lefthand_up
-            key: 18
-            description: Move left-hand side up, e.g. arm rest
+            key: 108
           - name: lefthand_down
-            key: 19
-            description: Move left-hand side down, e.g. arm rest
+            key: 109
           - name: righthand_up
-            key: 20
-            description: Move right-hand side up, e.g. arm rest
+            key: 110
           - name: righthand_down
-            key: 21
-            description: Move right-hand side down, e.g. arm rest
+            key: 111
       - key: source
         type: string
-        description: Identifies the source, e.g. local IFE in the seat or crew
-          panel. The seat actuation system uses this parameter to prioritize
-          commands from different sources.
+        optional: true
+        description: A short string that identifies the source of the command.
+          The seat may use this parameter for logging purposes.

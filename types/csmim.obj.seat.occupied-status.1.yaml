@@ -2,10 +2,10 @@
 ---
 id: csmim.obj.seat.occupied-status.1
 supertypes: []
-description: >
+description: >-
   An interface which describes the occupied status of a seat within the cabin.
-attributes: []
 
+attributes: []
 resources:
   - id: occupied_status
     mode: r

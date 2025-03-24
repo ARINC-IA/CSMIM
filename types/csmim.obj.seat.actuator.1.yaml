@@ -4,32 +4,33 @@ id: csmim.obj.seat.actuator.1
 supertypes:
   - csmim.obj.sas-operational-status.1
   # - csmim.obj.fault-report.1  # Does not exist yet
-description: >
+description: >-
   A class for seat actuators in the cabin. Specific data from the manufacturer
   must be added to derived classes. Register at path
-  crew/seats/<row>/<seat>/actuators/<actuator_id>
+  airline/furnishing/seats/<row>/<seat>/actuators/<actuator_id>
+
 attributes:
-  - key: seat
-    description: Position name of the installation location of the seat in the
-      aircraft cabin, e.g. A
   - key: row
     description: Row number of the installation location of the seat in the
-      aircraft cabin, e.g. 11
+      aircraft cabin, e.g. "11".
+  - key: seat
+    description: Position name of the installation location of the seat in the
+      aircraft cabin, e.g. "A".
   - key: actuator_id
     description: ID of the actuator
 
 resources:
-  - id: obstruction_flag
+  - id: is_obstructed
     mode: r
     type: bool
-    description: >
+    description: >-
       True, if obstruction was detected in last motion. Flag will be reset when
       a new motion starts.
 
   - id: position
     mode: r
     type: float
-    description: >
+    description: >-
       Current position of the actuator. Position value in percentage of travel
       0 – 100% (e.g. 42.5%  = 0.425).
 
@@ -40,7 +41,7 @@ resources:
     enum-values:
       - name: stopped
         key: 0
-        description: Actuator is stopped. No movement.
+        description: Actuator is stopped, no movement
       - name: forward
         key: 1
         description: Actuator is moving towards maximum position 100%
