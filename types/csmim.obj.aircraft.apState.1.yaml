@@ -23,7 +23,7 @@ resources:
     mode: r
     racc: false
     attributes: []
-    description: Bool flag indicating if the aircraft is in a state of 
+    description: Bool flag indicating if the aircraft is in a state of
       decompression
   - id: doors-open
     type: bool
