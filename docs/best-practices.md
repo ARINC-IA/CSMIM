@@ -94,6 +94,35 @@ The instance ID will be defined by the aircraft manufacturer in many cases.
 *Example:* `.../galleys/M5/gains/208` (two nested collections)
 
 
+## Resource Value Update and Cleanup
+
+If the value of a resource changes often (frequency around 0.5 Hz or higher),
+consider publishing it using a fixed period, without the MQTT Retain flag and
+MQTT Message Expiry property set.
+Document the minimum period in the resource type description,
+for clients to know when they have to consider data expired.<br />
+*Rationale:* This is straightforward to implement at the server and at the client.
+No expired data can linger at the MQTT broker.
+
+If the value of a resource changes seldom and its integrity is not critical at all,
+consider publishing it only on startup and on change, with the MQTT Retain flag set.
+The client will never consider a value expired. <br />
+*Rationale:* This is straightforward to implement at the server and at the client.
+
+If the value of a resource can change more often or less often,
+or if its integrity is of some importance,
+consider publishing it with the MQTT Retain flag and MQTT Message Expiry property set.
+Either publish the value using a fixed period;
+or publish the value on startup, on change and before the last published message expires. <br />
+*Rationale:* This is straightforward to implement at the client,
+while the server implementation needs some care.
+No expired data can linger indefinitely at the MQTT broker.
+
+Do not publish resource value updates more often than a predefined minimum period.
+Make sure that you publish the last update eventually. <br />
+*Rationale:* This conserves network bandwidth.
+
+
 ## Message Payloads
 
 Do not publish personal data, i.e. data that is subject to data privacy
