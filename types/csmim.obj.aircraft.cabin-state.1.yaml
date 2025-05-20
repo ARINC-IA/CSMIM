@@ -1,6 +1,6 @@
 %YAML 1.2
 ---
-id: csmim.obj.aircraft.cabinState.1
+id: csmim.obj.aircraft.cabin-state.1
 supertypes: []
 deprecated: false
 description: >
@@ -10,24 +10,21 @@ description: >
   be periodic meesages.
 
   The cabin state type resides at the path "/TBD"
+
 attributes: []
 resources:
   - id: fsb
     type: bool
     mode: r
-    racc: false
-    attributes: []
     description: Bool flag indicating fasten seat belt sign is active
+
   - id: keyline-pa
     type: bool
     mode: r
-    racc: false
-    attributes: []
     description: Bool flag indicating if the PA Keyline is active
+
   - id: keyline-pram
     optional: true
     type: bool
     mode: r
-    racc: false
-    attributes: []
     description: Bool flag indicating if the PRAM Keyline is active

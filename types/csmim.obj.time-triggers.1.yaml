@@ -1,6 +1,6 @@
 %YAML 1.2
 ---
-id: csmim.obj.timeTriggers.1
+id: csmim.obj.time-triggers.1
 supertypes: []
 deprecated: false
 description: >
@@ -9,18 +9,16 @@ description: >
   sent with the MQTT retain flag set.
 
   The time trigger type resides at the path "/TBD"
+
 attributes: []
 resources:
   - id: hr
     type: uint
     mode: r
-    racc: false
-    attributes: []
     description: The current UTC hour using 24-hour notation, updated when
       the hour changes
+
   - id: min
     type: uint
     mode: r
-    racc: false
-    attributes: []
     description: The current UTC minute, updated when the minute changes

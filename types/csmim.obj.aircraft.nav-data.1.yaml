@@ -1,6 +1,6 @@
 %YAML 1.2
 ---
-id: csmim.obj.aircraft.navData.1
+id: csmim.obj.aircraft.nav-data.1
 supertypes: []
 deprecated: false
 description: >
@@ -12,82 +12,71 @@ description: >
   period is > 1 sec.
 
   The navData type resides at the path "/TBD"
+
 attributes: []
 resources:
   - id: altitude
     type: float
     mode: r
-    racc: false
-    attributes: []
     description: Aircraft Baro Corrected Pressure Altitude in meters, generally
       sent at a minimum nominal rate of 1 Hz
+
   - id: ground-speed
     optional: true
     type: float
     mode: r
-    racc: false
-    attributes: []
     description: Ground speed in meters per second, generally sent at a minimum
       nominal rate of 1 Hz
+
   - id: heading-true
     optional: true
     type: float
     mode: r
-    racc: false
-    attributes: []
     description: Direction the aircraft is pointed relative to true north
       in degrees
+
   - id: latitude
     type: float
     mode: r
-    racc: false
-    attributes: []
     description: Aircraft present position latitude in degrees
+
   - id: longitude
     type: float
     mode: r
-    racc: false
-    attributes: []
     description: Aircraft present position longitude in degrees
+
   - id: mach
     optional: true
     type: float
     mode: r
-    racc: false
-    attributes: []
     description: Aircraft speed in mach number
+
   - id: air-speed
     optional: true
     type: float
     mode: r
-    racc: false
-    attributes: []
     description: Aircraft air speed in meters per second
+
   - id: temperature-static
     optional: true
     type: float
     mode: r
-    racc: false
-    attributes: []
     description: Outside air temperature
+
   - id: track-angle-true
     optional: true
     type: float
     mode: r
-    racc: false
-    attributes: []
     description: Direction the aircraft is moving relative to true north
+
   - id: wind-direction
     optional: true
     type: float
     mode: r
-    racc: false
-    attributes: []
     description: Wind Direction relative to true north
+
   - id: wind-speed
     optional: true
     type: float
     mode: r
-    racc: false
-    attributes: []
     description: Wind Speed
