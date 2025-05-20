@@ -69,7 +69,7 @@ Choose object paths in such a way that MQTT topic name filters can be put to
 good use.
 
 Use the security domain as the first element of a CSMIM object path. 
-Valid domains are currently `core`, `crew`, `pax`. <br />
+Valid domain names are defined in the CSMIM repository. <br />
 *Rationale:* Together with registration access rules configured in the CSMIM 
 central services, this guarantees a certain authenticity of published data.
 
