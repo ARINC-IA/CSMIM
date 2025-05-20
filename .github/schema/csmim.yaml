@@ -20,6 +20,7 @@ resource:
   optional: bool(required=False)
   racc: bool(required=False)
   description: str()
+  attributes: list(include('attribute'), required=False)
   enum-values: list(include('enum_value'), required=False)
   parameters: list(include('parameter'), required=False)
 
