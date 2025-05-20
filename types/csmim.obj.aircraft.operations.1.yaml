@@ -1,8 +1,6 @@
 %YAML 1.2
 ---
 id: csmim.obj.aircraft.operations.1
-supertypes: []
-deprecated: false
 description: >
   Operations data includes data about the platform the system is operating on,
   and information about the current mission. This data is generally provided
@@ -12,9 +10,8 @@ description: >
   The messages provided herein will have the MQTT retain flag set if the
   nominal message period is > 1 sec.
 
-  The navData type resides at the path "/TBD"
+  The aircraft operations type resides at the path "/TBD"
 
-attributes: []
 resources:
   - id: ac-icao24
     optional: true

@@ -1,8 +1,6 @@
 %YAML 1.2
 ---
 id: csmim.obj.aircraft.cabin-state.1
-supertypes: []
-deprecated: false
 description: >
   The cabin state type provides discrete values, sent as booleans, indicating
   the state of cabin-related functions like passenger address. All messages in
@@ -11,7 +9,6 @@ description: >
 
   The cabin state type resides at the path "/TBD"
 
-attributes: []
 resources:
   - id: fsb
     type: bool

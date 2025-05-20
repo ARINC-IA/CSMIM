@@ -1,8 +1,6 @@
 %YAML 1.2
 ---
 id: csmim.obj.aircraft.nav-data.1
-supertypes: []
-deprecated: false
 description: >
   The navigation data type provides aircraft navigation type data that is
   managed by avionics systems and relayed to the CSMIM system. Data is expected
@@ -11,9 +9,8 @@ description: >
   provided herein will have the MQTT retain flag set if the nominal message
   period is > 1 sec.
 
-  The navData type resides at the path "/TBD"
+  The nav-data type resides at the path "/TBD"
 
-attributes: []
 resources:
   - id: altitude
     type: float
