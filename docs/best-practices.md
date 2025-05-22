@@ -48,6 +48,17 @@ manufacturer. <br />
 *Rationale:* This ensures future compatibility and clarity of software 
 implementations.
 
+Avoid using the key number `0` for `enum` typed resources. <br />
+*Rationale:* This may reduce programming errors where the value `0` for an enum
+variable could also occur when no message has been received yet or when an
+empty/invalid message has been received.
+
+Do not define `enum` values to represent failure conditions such as
+invalid sensor readings. Publish an empty message instead, overriding
+a previous retained message. Use the CSMIM fault reporting mechanism to
+communicate details about the failure. <br />
+*Rationale:* Separate status publication from failure handling.
+
 Use the `string` data type to capture a potentially infinite number of states.
 Values are typically not processed by another device on the aircraft (displaying
 a string to a human does not constitute "processing").
