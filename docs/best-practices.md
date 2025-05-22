@@ -18,12 +18,25 @@ Define object types to capture one piece of functionality. <br />
 situation where the resources of one CSMIM object have to be provided by
 multiple hardware devices - which is complicated to achieve.
 
+Choose object type identifiers such that they are short yet without risk of
+naming conflicts with future object types. Group related object types by
+using the same prefix. <br />
+*Rationale:* This increases readability and understandability and places the
+files in the `types/` folder adjacent to each other. <br />
+*Example:* `csmim.obj.seat.1` and `csmim.obj.seat.actuator.1`
+
 
 ## Resource Type Definitions
 
 Restrict resource identifiers to use only lower-case characters and the
 underscore. <br />
 *Rationale:* This avoids lower-case/upper-case confusion.
+
+Do not repeat elements of the path of an object in the resource identifier. <br />
+*Example:* Resource identifier `position` instead of `seat_position`, when the object path is `airline/furniture/seats/2/A`.
+
+Choose the identifier of writable and executable resources such that the meaning of sending a command to that resource is immediately obvious. Consider using a verb for executable resources. Do not add suffixes such as `_command` or `_cmd`. <br />
+*Example:* Resource identifier `move` or `motion` instead of `motion_cmd`, when the object path is `airline/furniture/seats/2/A`.
 
 Choose the identifier of a `bool` resource type (or parameter or `dict` item)
 such that the meaning of the *true* and *false* value is immediately obvious.
@@ -92,6 +105,8 @@ collection of similar objects. The collection name should be a plural noun.
 The instance ID will be defined by the aircraft manufacturer in many cases.
 <br />
 *Example:* `.../galleys/M5/gains/208` (two nested collections)
+
+Do not specify in an object type description at which path(s) that type can be instantiated. Create links in the [path folder](/path) instead.
 
 
 ## Resource Value Update and Cleanup
