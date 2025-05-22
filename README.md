@@ -58,6 +58,11 @@ object types are located in the [types/ folder](types/) as files in
   Always create new files. Add your manufacturer code to the object type identifier as
   required by the CSMIM standard. Derive from standard types wherever possible.
 
+- **If you require a manufacturer code for your company:**
+  In case you do not have a manufacturer code for ARINC 853, see the
+  [instructions](https://github.com/ARINC-IA/CSMIM/tree/main/manufacturers) in the
+  manufacturer folder.
+
 
 ## Who maintains this repository?
 
@@ -66,3 +71,8 @@ by the members of *CSMIM working group*, which belongs to the
 [ARINC Cabin Systems Subcommittee](https://aviation-ia.sae-itc.com/subcommittees/cabin-systems-subcommittee).
 Every ARINC member company can become active in the Cabin Systems Subcommittee and join the
 CSMIM working group.
+
+## How to contact us?
+
+We maintain a [group email](mailto:arinc853-csmim@mailman.sae-itc.org), where you can reach out to the complete working group. Feel free
+to approach us.

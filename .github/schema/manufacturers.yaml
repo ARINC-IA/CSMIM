@@ -1,4 +1,4 @@
-id: regex('[A-Z]{3}')
-description: str()
+code: regex('[A-Z0-9]{3,}')
+company_name: str()
 website: str(required=False)
 contact: str(required=False)

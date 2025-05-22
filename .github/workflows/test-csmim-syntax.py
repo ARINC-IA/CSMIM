@@ -17,7 +17,11 @@ def pytest_generate_tests(metafunc):
         filelist = glob.glob("types/*")
         metafunc.parametrize("typeFile", filelist)
     if "manufacturerFile" in metafunc.fixturenames:
-        filelist = glob.glob("manufacturers/*")
+        filelist = [
+            file
+            for file in glob.glob("manufacturers/*")
+            if os.path.basename(file) not in ["README.md"]
+        ]
         metafunc.parametrize("manufacturerFile", filelist)
     if "pathFile" in metafunc.fixturenames:
         filelist = [
@@ -51,7 +55,7 @@ def test_type_id_matches(typeFile):
 # check the id of all manufacturer files matches the filename
 def test_manufacturer_id_matches(manufacturerFile):
     content = load_object_type(manufacturerFile)
-    assert manufacturerFile == "manufacturers/" + content["id"] + ".yaml"
+    assert manufacturerFile == "manufacturers/" + content["code"] + ".yaml"
 
 
 # check referenced supertypes exist and are not empty

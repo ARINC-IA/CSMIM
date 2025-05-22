@@ -1,4 +1,5 @@
+%YAML 1.2
 ---
-id: AIB
-description: Airbus
+code: AIB
+company_name: Airbus
 website: https://www.airbus.com
