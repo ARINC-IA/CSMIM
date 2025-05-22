@@ -1,24 +1,16 @@
-# Schema for Describing CSMIM Payloads
+# Schema for describing CSMIM payloads
 
 The payload of a CSMIM message contains a CBOR-encoded resource value,
-parameters for an EXECUTE request or a responses to such a request.  The
-ARINC 853 standard already defines in §6.2.7 some facilities for specifying
-valid payloads in an object type specification.  Some elements are missing
-from the standard, though, for example a way to specify the items of a CBOR
-dictionary.
+parameters for an EXECUTE request or a response to such a request. The
+ARINC 853 standard defines in §6.2.7 facilities for specifying
+valid payloads in an object type specification.
 
-This document amends the definitions of ARINC 853, thereby providing a
-complete Schema to specify formally how a CSMIM resource value, parameter or
-response may look like.
-
-The CSMIM Schema definition is much inspired by
-[JSON Schema](https://json-schema.org). It differs only slightly in
-structure and naming, in order to stay consistent with the existing
-definitions of ARINC 853.
+This document amends the ARINC 853 specification and provides a complete
+Schema to specify formally how a CSMIM resource value, parameter or response
+shall look like. It can be applied to nested elements, like dictionaries.
 
 
-
-## General Structure and Syntax
+## General structure and syntax
 
 CSMIM object type definitions are expressed using YAML in the CSMIM
 Knowledge Base. The CSMIM Schema therefore uses YAML, too.
@@ -28,8 +20,7 @@ Consider the following example:
 
 ```yaml
 id: csmim.obj.something.1
-supertypes: []
-attributes: []
+
 resources:
 
   - id: value_resource
@@ -54,7 +45,6 @@ definitions are allowed or even required. The following sections list those
 definitions for each of the data types of CSMIM.
 
 
-
 ## Schema for data type `bool`
 
 There are no further definitions for boolean values:
@@ -62,43 +52,23 @@ There are no further definitions for boolean values:
     type: bool
 
 
+## Schema for the data types `int`, `uint` and `float`
 
-# Schema for the data types `int`, `uint` and `float`
-
-For integer and floating-point numbers, you can define the allowed range for
-the value:
-
-    type: int
-    minimum: 3
-    exclusive-minimum: 2
-    maximum: 20
-    exclusive-maximum: 21
-
-There are two types of minimum and maximum: inclusive and exclusive. The
-value must be >= the minimum respectively > the exclusive minimum. 
-
-You can also define a physical unit for the value, which must always be
-given as an SI unit.
+For integer and floating-point numbers, you can define a physical unit
+for the value, which should be given as an SI unit.
 
     type: float
     unit: m/s
 
 
+## Schema for the data types `string` and `bytes`
 
-# Schema for the data types `string` and `bytes`
-
-For human-readable strings and byte strings, you can define the allowed
-range for the string length:
+There are no further definitions for string values:
 
     type: string
-    min-length: 2
-    max-length: 3
-    
-**TODO:** Provide shortcut `length`?
 
 
-
-# Schema for the data type `enum`
+## Schema for the data type `enum`
 
 As defined in ARINC 853:
 
@@ -109,29 +79,20 @@ As defined in ARINC 853:
         description: whatever
 
 
-
-# Schema for the data type `utc`
+## Schema for the data type `utc`
 
 There are no further definitions for time stamps:
 
     type: utc
 
 
+## Schema for the data type array
 
-# Schema for the data type array
-
-You can define the allowed range for the number of items of an array:
-
-    type: int[]
-    min-items: 1
-    max-items: 3
-
-For the items of the array, you can define a schema that validates these:
+For the items of the array, you can define descriptions:
 
     type: string[]
     array-items:
       description: If necessary
-      max-length: 20
 
 Note that the `type` of the array items is not specified again, because the
 array type already does so. For multidimensional arrays, you can specify the
@@ -139,28 +100,22 @@ properties of the inner array in the first `array-items` definition, and the
 properties of the items in the second:
 
     type: float[][]
-    max-items: 3
     array-items:
-      max-items: 3
       array-items:
-        minimum: 0.0
-        maximum: 10000.0
         unit: m
 
 
+## Schema for the data type `dict`
 
-# Schema for the data type `dict`
-
-For a dictionary, you can specify the known dictionary keys and a schema
-that validates their value:
+For a dictionary, you can specify the known dictionary keys:
 
     type: dict
+    description: A description of the dictionary
     dict-items:
       - key: identifier
         optional: true
         description: A description of the dictionary item
         type: string
-        max-length: 8
 
 The `parameters` that describe the parameters of an EXECUTE request have the
 same structure as these `dict-items`.
