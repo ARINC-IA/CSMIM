@@ -1,7 +1,7 @@
 # Best Practices for CSMIM Definitions
 
 This document collects best practices for defining CSMIM artifacts, in
-particular object types, resource types, their paths etc. The document intends
+particular object types, resource types, their paths, etc. The document intends
 to provide design guidance. Its rules are not mandatory to be followed.
 
 
@@ -16,9 +16,9 @@ chooses to structure its hardware.
 Define object types to capture one piece of functionality. <br />
 *Rationale:* This promotes abstraction from hardware layout. And it avoids the
 situation where the resources of one CSMIM object have to be provided by
-multiple hardware devices - which is complicated to achieve.
+multiple hardware devices – which is complicated to achieve.
 
-Choose object type identifiers such that they are short yet without risk of
+Choose object type identifiers such that they are short yet with a low risk of
 naming conflicts with future object types. Group related object types by
 using the same prefix. <br />
 *Rationale:* This increases readability and understandability and places the
@@ -32,14 +32,20 @@ Restrict resource identifiers to use only lower-case characters and the
 underscore. <br />
 *Rationale:* This avoids lower-case/upper-case confusion.
 
-Do not repeat elements of the path of an object in the resource identifier. <br />
-*Example:* Resource identifier `position` instead of `seat_position`, when the object path is `airline/furniture/seats/2/A`.
+Do not repeat elements of the object path in the resource identifier. <br />
+*Example:* Resource identifier `position` instead of `seat_position`,
+when the resulting resource path is `airline/furniture/seats/2/A/position`.
 
-Choose the identifier of writable and executable resources such that the meaning of sending a command to that resource is immediately obvious. Consider using a verb for executable resources. Do not add suffixes such as `_command` or `_cmd`. <br />
-*Example:* Resource identifier `move` or `motion` instead of `motion_cmd`, when the object path is `airline/furniture/seats/2/A`.
+Choose the identifier of writable and executable resources such that the meaning
+of sending a command to that resource is immediately obvious.
+Consider using a verb for executable resources.
+Do not add suffixes such as `_command` or `_cmd`. <br />
+*Example:* Resource identifier `move` or `motion` instead of `motion_cmd`.
+Note that the MQTT Topic Name will include the operation: 
+`v1/command/<user>/airline/furniture/seats/2/A/motion`.
 
-Choose the identifier of a `bool` resource type (or parameter or `dict` item)
-such that the meaning of the *true* and *false* value is immediately obvious.
+Choose the identifier of a `bool` data model item such that the meaning of 
+the *true* and *false* value is immediately obvious.
 
 Use the `enum` data type to capture a *finite* number of states that will be
 processed by another device on the aircraft. Do not declare the enumeration to
@@ -63,8 +69,9 @@ Use the `string` data type to capture a potentially infinite number of states.
 Values are typically not processed by another device on the aircraft (displaying
 a string to a human does not constitute "processing").
 
+Split data items into individual resources wherever possible.
 Use an array or `dict` data type to group multiple data items that depend on
-each other, that means, data items that must be transmitted atomically in order
+each other, that means, data items that must be transmitted atomically 
 to ensure validity of the combined value. <br />
 *Rationale:* Data integrity. <br />
 *Example:* Velocity or acceleration would use an array. A timestamp made of 
@@ -116,8 +123,6 @@ collection of similar objects. The collection name should be a plural noun.
 The instance ID will be defined by the aircraft manufacturer in many cases.
 <br />
 *Example:* `.../galleys/M5/gains/208` (two nested collections)
-
-Do not specify in an object type description at which path(s) that type can be instantiated. Create links in the [path folder](/path) instead.
 
 
 ## Resource Value Update and Cleanup
