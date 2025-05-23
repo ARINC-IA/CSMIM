@@ -21,92 +21,145 @@ Consider the following example:
 id: csmim.obj.something.1
 
 resources:
-
   - id: value_resource
     mode: r
     type: int
-    # Put resource schema here
+    # Put schema for resource value here
     
   - id: command_resource
     mode: x
     parameters:
       - key: first_param
         type: int
-        # Put resource schema here
+        # Put schema for command parameter her
     
     type: string
-    # Put resource schema here
+    # Put schema for response here
 ```
 
 As you can see from the above example, the schema can be put wherever a
 CSMIM data type is specified.
 
 
-## Resource additions
+## Schema definitions
 
-This amendment allows for `description` tags to add human readable descriptions.
+The following sections list and explain all elements that you can use in
+CSMIM Schema definitions. This includes the elements already specified in
+ARINC 853 as well as the amendments by this document.
 
-For integer and floating-point numbers, you can define a `unit` for the value,
-which should be given as an SI unit.
 
-```
+### Descriptions
+
+You may add a `description` entry with a human-readable description at every
+position in the Schema:
+
+```yaml
 type: float
-unit: km/h
 description: The speed of the device relative to the passenger
 ```
 
-## Nested elements
 
-ARINC 853 specifies `enum-values` for `enum`s. This amendment extends this pattern
-also to arrays and dictionaries:
+### Physical units
 
+For integer and floating-point numbers, you should define a `unit` for the 
+value, if applicable. Units should belong to the SI system.
+
+```yaml
+type: float
+unit: m/s
 ```
+
+
+### Enumeration values
+
+For `enum`-typed data items, you must add an `enum-values` entry to the Schema.
+This is as specified by ARINC 853:
+
+```yaml
 type: enum
 description: The description of the enum
 enum-values:
   - name: identifier
     key: 3
-    description: Additional notes for that key
+    description: Additional notes for this enumeration value
 ```
 
-This can also be applied to nested elements, for example:
+The Schema for each enumeration value contains the following entries:
 
-```
+- `name` is a short human-readable identifier string.
+- `key` is the unsigned integer that represents the enumeration value in CBOR.
+- `description` is a longer, human-readable description (if necessary).
+
+
+### Array items
+
+For data items in an array, you may add an `array-items` entry to the Schema.
+This element contains a nested Schema that describes the array items:
+
+```yaml
 type: enum[]
-description: If necessary
+description: Description of the whole array # if necessary
 array-items:
   enum-values:
     - name: identifier
       key: 3
-      description: Additional notes for that key 
+      description: Additional notes for this enumeration value 
 ```
 
-Note that the `type` of the array items is not specified again, because the
-array type already does so. For multidimensional arrays, you can specify the
-properties of the inner array in the first `array-items` definition, and the
-properties of the items in the second:
+For multidimensional arrays, you must use nested `array-items` elements:
 
-```
+```yaml
 type: float[][]
 array-items:
   array-items:
     unit: m
 ```
 
-For a dictionary, you can specify the known dictionary keys:
+Note that the `type` of the array items is not specified again, because the
+array type already does so.
 
-```
+
+### Dictionary items
+
+For a dictionary, you should specify the known dictionary keys with a
+`dict-items` entry in the Schema:
+
+```yaml
 type: dict
 description: A description of the dictionary
 dict-items:
   - key: identifier
     optional: true
-    description: A description of the dictionary item
     type: string
+    description: A description of this dictionary item
 ```
 
-The `parameters` that describe the parameters of an EXECUTE request have the
-same structure as these `dict-items`.
+The nested Schema of a dictionary item contains the following entries:
 
-To ensure upwards compatibility, CSMIM dicts may always contain keys not
-specified in the schema.
+- `key` is the name of the item, and represents it in CBOR.
+- `optional` specifies whether the item may be omitted from the dictionary;
+  if not present, then the item is mandatory.
+- `type` is the CSMIM data type of the item.
+- all other Schema elements as applicable for the `type`.
+
+To ensure upwards compatibility, CSMIM dictionaries may always contain keys not
+specified in the Schema.
+
+
+### Parameters for commands
+
+The `parameters` Schema entry which describes the parameters of an EXECUTE 
+request has the same structure as a `dict-items` entry:
+
+```yaml
+resources:
+  - id: reset
+    mode: x
+    type: void
+    parameters:
+      - key: wait_time
+        optional: true
+        type: uint
+        unit: s
+        description: How long to wait before resetting the LRU
+```
