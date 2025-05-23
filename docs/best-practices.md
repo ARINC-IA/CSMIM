@@ -81,7 +81,10 @@ altitude would be separate resources.
 Use a writable resource if the resource has a single "value" that can be
 changed. Make sure that the operation is idempotent (multiple WRITE requests
 have the same effect as a single one). If this is not the case, you must use an
-executable resource instead.
+executable resource instead. <br />
+*Rationale:* Consistency with the CSMIM data model specification and 
+definition of operations. Note that WRITE operations may use other MQTT QoS 
+values than EXECUTE operations.
 
 
 ## Paths and Data Model Structure
@@ -101,13 +104,14 @@ good use.
 
 Use the security domain as the first element of a CSMIM object path. 
 Valid domain names are defined in the CSMIM repository. <br />
-*Rationale:* Together with registration access rules configured in the CSMIM 
-central services, this guarantees a certain authenticity of published data.
+*Rationale:* This ensures consistency between a CSMIM endpoint's certificate
+and the data model structure.
 
 Use the system's ATA chapter name as the second element of a CSMIM object path. 
 <br />
-*Rationale:* Together with registration access rules configured in the CSMIM
-central services, this guarantees a certain authenticity of published data.
+*Rationale:* This ensures consistency between a CSMIM endpoint's certificate
+and the data model structure. It also enables the data model of each ATA
+chapter to be designed independently of other chapters.
 
 Consider using the ATA subchapter name as the third element of a CSMIM 
 object path. <br />
@@ -137,14 +141,15 @@ No expired data can linger at the MQTT broker.
 
 If the value of a resource changes seldom and its integrity is not critical at all,
 consider publishing it only on startup and on change, with the MQTT Retain flag set.
-The client will never consider a value expired. <br />
+The client will never consider a value expired in this case. <br />
 *Rationale:* This is straightforward to implement at the server and at the client.
 
 If the value of a resource can change more often or less often,
 or if its integrity is of some importance,
-consider publishing it with the MQTT Retain flag and MQTT Message Expiry property set.
-Either publish the value using a fixed period;
-or publish the value on startup, on change and before the last published message expires. <br />
+consider publishing it with the MQTT Retain flag and MQTT Message Expiry
+property set. Either publish the value using a fixed period;
+or publish the value on startup, on change and before the last published message
+expires. <br />
 *Rationale:* This is straightforward to implement at the client,
 while the server implementation needs some care.
 No expired data can linger indefinitely at the MQTT broker.
