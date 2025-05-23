@@ -16,34 +16,47 @@ attribute:
 resource:
   id: regex('^[A-Za-z0-9\\-._~]+$')
   mode: any('r', 'w', 'rw', 'x')
-  type: include('resource_type')
-  optional: bool(required=False)
   racc: bool(required=False)
-  description: str()
   attributes: list(include('attribute'), required=False)
+  parameters: list(include('dict_item'), required=False)
+  type: include('data_type')
+  description: str()
+  unit: str(required=False)
+  optional: bool(required=False)
   enum-values: list(include('enum_value'), required=False)
-  parameters: list(include('parameter'), required=False)
+  array-items: include('array_item', required=False)
+  dict-items: list(include('dict_item'), required=False)
 
 enum_value:
   key: int(min=0)
   name: str()
   description: str(required=False)
 
-parameter:
-  key: str()
-  type: include('resource_type')
-  optional: bool(required=False)
-  description: str()
+array_item:
+  description: str(required=False)
+  unit: str(required=False)
   enum-values: list(include('enum_value'), required=False)
+  array-items: include('array_item', required=False)
+  dict-items: list(include('dict_item'), required=False)
 
-resource_type: enum(
+dict_item:
+  key: str()
+  type: include('data_type')
+  description: str(required=False)
+  unit: str(required=False)
+  optional: bool(required=False)
+  enum-values: list(include('enum_value'), required=False)
+  array-items: include('array_item', required=False)
+  dict-items: list(include('dict_item'), required=False)
+
+data_type: enum(
   'void',
   'raw',
   'bool', 'bool[]',
   'int', 'int[]', 'int[][]',
   'uint', 'uint[]', 'uint[][]',
   'float', 'float[]', 'float[][]',
-  'string', 'string[]',
+  'string', 'string[]', 'string[][]',
   'bytes', 'bytes[]',
   'enum', 'enum[]',
   'utc', 'utc[]',

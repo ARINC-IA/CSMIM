@@ -1,7 +1,6 @@
 %YAML 1.2
 ---
 id: csmim.obj.directory.1
-supertypes: []
 description: >
   The CSMIM resource directory service. The resource directory announces
   registration and removal of objects in the CSMIM network depending on the
@@ -18,7 +17,7 @@ description: >
   be published by the resource directory, in particular at network startup.
 
   The resource directory always resides at the path "core/csmim/directory".
-attributes: []
+
 resources:
   - id: csmim.obj
     mode: r
