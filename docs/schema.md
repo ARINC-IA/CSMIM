@@ -24,21 +24,21 @@ resources:
   - id: value_resource
     mode: r
     type: int
-    # Put schema for resource value here
+    # Put schema here to specify resource value
     
   - id: command_resource
     mode: x
     parameters:
       - key: first_param
         type: int
-        # Put schema for command parameter her
+        # Put schema here to specify command parameter
     
     type: string
-    # Put schema for response here
+    # Put schema here to specify response
 ```
 
 As you can see from the above example, the schema can be put wherever a
-CSMIM data type is specified.
+CSMIM data type is defined.
 
 
 ## Schema definitions
