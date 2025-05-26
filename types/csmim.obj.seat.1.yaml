@@ -2,10 +2,10 @@
 ---
 id: csmim.obj.seat.1
 supertypes:
-  - csmim.obj.sas-operational-status.1
+  - csmim.obj.seat.sas-operational-status.1
   - csmim.obj.seat.occupied-status.1
-  # - csmim.obj.fault-reporter.1  # Does not exist yet
-description: >-
+  # - csmim.obj.fault-reporter.1 # Does not exist yet
+description: >
   Class for the overall status of a seat within the cabin. The seat could be any
   type of seat. Register at path airline/furnishing/seats/<row>/<seat>
 
@@ -18,10 +18,10 @@ attributes:
       the aircraft cabin, e.g. "A".
 
 resources:
-  - id: seat_position
+  - id: position
     mode: r
     type: enum
-    description: >-
+    description: >
       Seat position for predefined positions. A particular seat model may
       support only a subset of the positions. The enumeration may be extended in
       the future, therefore clients must be able to handle other values than
@@ -59,7 +59,7 @@ resources:
   - id: safe_for_ttl
     mode: r
     type: bool
-    description: >-
+    description: >
       All criteria for safe to flight on seat/suit level are fulfilled. E.g. the
       seat is in TTL position and all furniture is correctly stored.
 
@@ -67,7 +67,7 @@ resources:
     mode: rw
     type: bool
     optional: true
-    description: >-
+    description: >
       The seat cannot be moved out of TTL. Maybe only commands into TTL position
       are allowed. The lockout feature can be set via the interface or another
       key line.
@@ -76,7 +76,7 @@ resources:
     mode: rw
     type: bool
     optional: true
-    description: >-
+    description: >
       Feature to disable seat movements, if the seat is occupied with a child.
       Feature shall be activated/deactivated from crew.
 
@@ -94,11 +94,11 @@ resources:
       - name: divider_obstruction
         key: 3
 
-  - id: motion_cmd
+  - id: motion
     mode: x
     type: void
     optional: true
-    description: >-
+    description: >
       Motion command to change seat position. Only one command at the same time
       is allowed. The seat will send a code 400 response if the combination of
       "part" and "direction" parameters is invalid. The seat will send a code
@@ -146,7 +146,7 @@ resources:
       - key: direction
         type: enum
         description: Direction of the motion. This enumeration may be extended
-          in the future, analogous to the "seat_position" enumeration.
+          in the future, analogous to the "position" enumeration.
         enum-values:
           - name: stop
             key: 0

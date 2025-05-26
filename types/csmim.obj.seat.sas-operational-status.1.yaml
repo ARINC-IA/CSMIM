@@ -1,17 +1,15 @@
 %YAML 1.2
 ---
-id: csmim.obj.sas-operational-status.1
-supertypes: []
-description: >-
+id: csmim.obj.seat.sas-operational-status.1
+description: >
   Interface which describes the operational status of a device or a group of
   devices (e.g. a complete seat).
 
-attributes: []
 resources:
   - id: operational_status
     mode: r
     type: enum
-    description: >-
+    description: >
       Describes the operational status of a device or a group of devices (e.g. a
       complete seat). In the future additional values might be added.
     enum-values:

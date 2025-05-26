@@ -2,9 +2,9 @@
 ---
 id: csmim.obj.seat.actuator.1
 supertypes:
-  - csmim.obj.sas-operational-status.1
-  # - csmim.obj.fault-report.1  # Does not exist yet
-description: >-
+  - csmim.obj.seat.sas-operational-status.1
+  # - csmim.obj.fault-report.1 # Does not exist yet
+description: >
   A class for seat actuators in the cabin. Specific data from the manufacturer
   must be added to derived classes. Register at path
   airline/furnishing/seats/<row>/<seat>/actuators/<actuator_id>
@@ -23,14 +23,14 @@ resources:
   - id: is_obstructed
     mode: r
     type: bool
-    description: >-
+    description: >
       True, if obstruction was detected in last motion. Flag will be reset when
       a new motion starts.
 
   - id: position
     mode: r
     type: float
-    description: >-
+    description: >
       Current position of the actuator. Position value in percentage of travel
       0 – 100% (e.g. 42.5%  = 0.425).
 
