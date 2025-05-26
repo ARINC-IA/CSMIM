@@ -139,20 +139,14 @@ for clients to know when they have to consider data expired.<br />
 *Rationale:* This is straightforward to implement at the server and at the client.
 No expired data can linger at the MQTT broker.
 
-If the value of a resource changes seldom and its integrity is not critical at all,
-consider publishing it only on startup and on change, with the MQTT Retain flag set.
-The client will never consider a value expired in this case. <br />
-*Rationale:* This is straightforward to implement at the server and at the client.
-
 If the value of a resource can change more often or less often,
-or if its integrity is of some importance,
-consider publishing it with the MQTT Retain flag and MQTT Message Expiry
-property set. Either publish the value using a fixed period;
-or publish the value on startup, on change and before the last published message
-expires. <br />
+publish it with the MQTT Retain flag and MQTT Message Expiry property set. 
+Either publish the value using a fixed period; or publish the value on startup,
+on change and whenever the last published message is about to expire. <br />
 *Rationale:* This is straightforward to implement at the client,
 while the server implementation needs some care.
 No expired data can linger indefinitely at the MQTT broker.
+On-change publishing conserves network bandwidth.
 
 Do not publish resource value updates more often than a predefined minimum period.
 Make sure that you publish the last update eventually. <br />
