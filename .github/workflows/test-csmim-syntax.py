@@ -66,8 +66,8 @@ def test_supertypes_exist(typeFile):
             assert len(glob.glob("types/" + supertype + ".yaml")) == 1
 
 
-# check all files in the path folder are softlinks
-def test_path_are_softlinks(pathFile):
+# check all files in the path folder are soft links
+def test_path_are_soft_links(pathFile):
     assert os.path.islink(pathFile) or os.path.isdir(pathFile)
 
 
@@ -88,7 +88,18 @@ def test_path_links_valid(pathFile):
 # check that paths use only valid characters
 def test_path_dirs_valid(pathFile):
     if os.path.isdir(pathFile):
-        assert re.fullmatch("<?[A-Za-z0-9\\-._]+>?", os.path.basename(pathFile))
+        assert re.fullmatch(
+            "<?[A-Za-z0-9\\-._]+>?", os.path.basename(pathFile)
+        ), "path contains invalid characters"
+
+
+# check that path domain and service use only characters allowed for FQDN
+# rationale: for compatibility with authentication certificates
+def test_path_domain_system_fqdn(pathFile):
+    if os.path.isdir(pathFile) and os.path.normpath(pathFile).count(os.sep) == 2:
+        assert re.fullmatch(
+            "path(/[a-z0-9\\-.]+){2}", os.path.normpath(pathFile)
+        ), "domain/system contains invalid characters"
 
 
 # recursive helper function: iterate the tree of referenced files and check that
