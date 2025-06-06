@@ -6,26 +6,29 @@ supertypes:
   - csmim.obj.seat.occupied-status.1
   # - csmim.obj.fault-reporter.1 # Does not exist yet
 description: >
-  Class for the overall status of a seat within the cabin. The seat could be any
-  type of seat. Register at path airline/furnishing/seats/<row>/<seat>
+  Represents the overall status of a seat within the cabin. The seat could be
+  any type of seat. It may also comprise additional furniture that belongs to
+  the seat, for example a privacy divider.
 
 attributes:
   - key: row
-    description: Row number of the installation location of the seat within the
-      aircraft cabin, e.g. "11".
+    description: Seat row number as indicated in the cabin layout and to the
+      passenger. For example "11". Note that seat row numbers need not be
+      consecutive or always start at 1.
   - key: seat
-    description: Position name of the installation location of the seat within
-      the aircraft cabin, e.g. "A".
+    description: Seat position name in a column of seats, as indicated in the
+      cabin layout and to the passenger. For example "A" or "C". Note that these
+      need not be consecutive and can change from row to row.
 
 resources:
   - id: position
     mode: r
     type: enum
     description: >
-      Seat position for predefined positions. A particular seat model may
-      support only a subset of the positions. The enumeration may be extended in
-      the future, therefore clients must be able to handle other values than
-      those defined here for upward compatibility.
+      The position of the seat, out of a list of predefined positions. A
+      particular seat model may support only a subset of the positions. The
+      enumeration may be extended in the future, therefore clients must be able
+      to handle other values than those defined here for upward compatibility.
     enum-values:
       - name: undefined
         key: 0
@@ -60,30 +63,31 @@ resources:
     mode: r
     type: bool
     description: >
-      All criteria for safe to flight on seat/suit level are fulfilled. E.g. the
-      seat is in TTL position and all furniture is correctly stored.
+      Whether all criteria for safe to flight on seat and suite level are
+      fulfilled. That is, the seat is in TTL position and all furniture is
+      stored correctly.
 
   - id: ttl_lock
     mode: rw
     type: bool
     optional: true
     description: >
-      The seat cannot be moved out of TTL. Maybe only commands into TTL position
-      are allowed. The lockout feature can be set via the interface or another
-      key line.
+      Whether the seat cannot be moved out of TTL. Commands that move the seat
+      into TTL position may still be allowed. The lockout feature can be
+      commanded via this interface or another key line.
 
   - id: child_lockout
     mode: rw
     type: bool
     optional: true
     description: >
-      Feature to disable seat movements, if the seat is occupied with a child.
-      Feature shall be activated/deactivated from crew.
+      Whether seat movements are disabled because the seat is occupied with a
+      child. This feature should be commanded by the crew.
 
   - id: safety_event
     mode: r
     type: enum
-    description: The last safety-related event on seat / suit level.
+    description: The last safety-related event on seat and suite level.
     enum-values:
       - name: none
         key: 0
@@ -99,11 +103,19 @@ resources:
     type: void
     optional: true
     description: >
-      Motion command to change seat position. Only one command at the same time
-      is allowed. The seat will send a code 400 response if the combination of
-      "part" and "direction" parameters is invalid. The seat will send a code
-      501 response if the specified "part" or "direction" are not supported by
-      this particular seat model.
+      Motion command to change the seat position. The seat will send a code 400
+      response if the combination of "part" and "direction" parameters is
+      invalid. The seat will send a code 501 response if the specified "mode",
+      "part" or "direction" are not supported by the particular seat model.
+
+      The system architecture should be designed such that there is only one
+      CSMIM endpoint sending commands to this resource. The commanding system
+      should be designed to prevent conflicting commands and avoid rapid command
+      changes, thereby promoting smooth and reliable seat operation.
+      Despite these architectural safeguards, seats must independently validate
+      and filter incoming commands to guarantee safe and proper operation under
+      all circumstances. In particular, the seat control logic must detect and
+      mitigate the effects of conflicting commands.
     parameters:
       - key: mode
         type: enum
@@ -112,14 +124,14 @@ resources:
           - name: cyclic
             key: 1
             description: Commands needs to be sent cyclically, otherwise the
-              motion will stop.
+              motion will stop. The typical period is 500 ms.
           - name: once
             key: 2
-            description: Command needs to be sent only once. The seat will move
-              to the desired position.
+            description: The command needs to be sent only once. The seat will
+              move until reaching the desired position.
       - key: part
         type: enum
-        description: Defines whether the whole seat is to be moved, or a
+        description: Defines whether the whole seat is to be moved, or just a
           specific part of the seat or furniture. This enumeration may be
           extended in the future.
         enum-values:
@@ -145,8 +157,8 @@ resources:
             key: 10
       - key: direction
         type: enum
-        description: Direction of the motion. This enumeration may be extended
-          in the future, analogous to the "position" enumeration.
+        description: The direction of the motion. This enumeration may be
+          extended in the future, analogous to the "position" enumeration.
         enum-values:
           - name: stop
             key: 0
@@ -192,8 +204,3 @@ resources:
             key: 110
           - name: righthand_down
             key: 111
-      - key: source
-        type: string
-        optional: true
-        description: A short string that identifies the source of the command.
-          The seat may use this parameter for logging purposes.
