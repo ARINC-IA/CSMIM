@@ -60,7 +60,7 @@ object types are located in the [types/ folder](types/) as files in
 
 - **If you require a manufacturer code for your company:**
   In case you do not have a manufacturer code for ARINC 853, see the
-  [instructions](https://github.com/ARINC-IA/CSMIM/tree/main/manufacturers) in the
+  [instructions](https://github.com/ARINC-IA/CSMIM/tree/main/manufacturers#readme) in the
   manufacturer folder.
 
 

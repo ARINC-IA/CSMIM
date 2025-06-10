@@ -14,7 +14,11 @@ def load_object_type(yamlFile):
 # generate test cases for all files
 def pytest_generate_tests(metafunc):
     if "typeFile" in metafunc.fixturenames:
-        filelist = glob.glob("types/*")
+        filelist = [
+            file
+            for file in glob.glob("types/*")
+            if os.path.basename(file) not in ["README.md"]
+        ]
         metafunc.parametrize("typeFile", filelist)
     if "manufacturerFile" in metafunc.fixturenames:
         filelist = [
