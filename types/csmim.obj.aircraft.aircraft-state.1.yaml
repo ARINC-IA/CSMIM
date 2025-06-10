@@ -9,51 +9,49 @@ description: >
   The aircraft state type resides at the path "/TBD"
 
 resources:
-  - id: on-ground
+  - id: on_ground
     type: bool
     mode: r
-    description: Bool flag indicating if the aircraft is on the ground
+    description: Whether the aircraft is on the ground
 
   - id: decompression
     optional: true
     type: bool
     mode: r
-    description: Bool flag indicating if the aircraft is in a state of
-      decompression
+    description: Whether the aircraft is in a state of decompression
 
-  - id: doors-open
-    type: bool
-    mode: r
-    description: Bool flag indicating if any of the passenger doors are open
-
-  - id: engines-on
+  - id: doors_open
     optional: true
     type: bool
     mode: r
-    description: Bool flag indicating if any aircraft engines are on
+    description: Whether any of the passenger doors are open
 
-  - id: maintenance-mode
-    type: bool
-    mode: r
-    description: Bool flag indicating the applicable aircraft system is in a
-      maintenance mode
-
-  - id: comm-gnd-avail
+  - id: engines_on
     optional: true
     type: bool
     mode: r
-    description: Bool flag indicating a terrestrial network-based offboard comm
-      system is available
+    description: Whether any aircraft engines are on
 
-  - id: comm-sat-avail
+  - id: maintenance_mode
+    type: bool
+    mode: r
+    description: Whether the CSMIM system is in a maintenance mode
+
+  - id: comm_gnd_avail
     optional: true
     type: bool
     mode: r
-    description: Bool flag indicating a Sat-based offboard comm system is
+    description: Whether a terrestrial network-based offboard comm system is
       available
+
+  - id: comm_sat_avail
+    optional: true
+    type: bool
+    mode: r
+    description: Whether a sat-based offboard comm system is available
 
   - id: smoke
     optional: true
     type: bool
     mode: r
-    description: Bool flag indicating if a smoke alert is on
+    description: Whether a smoke alert is on

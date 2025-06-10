@@ -13,24 +13,24 @@ description: >
   The aircraft operations type resides at the path "/TBD"
 
 resources:
-  - id: ac-icao24
+  - id: ac_icao24
     optional: true
     type: bytes
     mode: r
     description: 24-bit ICAO Hex Code
 
-  - id: ac-type
+  - id: ac_type
     type: string
     mode: r
     description: Aircraft registration ICAO 4-character aircraft type
 
-  - id: ac-serial
+  - id: ac_serial
     optional: true
     type: string
     mode: r
     description: Aircraft serial number assigned by manufacturer
 
-  - id: tail-id
+  - id: tail_id
     type: string
     mode: r
     description: Aircraft Registration Number
@@ -45,51 +45,52 @@ resources:
     mode: r
     description: Destination Airport, 4-character ICAO Code
 
-  - id: distance-to-go
+  - id: distance_to_go
     optional: true
     type: uint
     mode: r
-    description: Distance to the planned destination in kilometers
+    unit: km
+    description: Distance to the planned destination
 
-  - id: time-to-destination
+  - id: time_to_destination
     optional: true
     type: uint
     mode: r
-    description: Estimated time to arrival at destination in seconds
+    unit: s
+    description: Estimated time to arrival at destination
 
-  - id: leg-start
+  - id: leg_start
     type: utc
     mode: r
     description: Time of the start of the current flight leg, value is updated
       when a new flight leg starts
 
-  - id: flight-number
+  - id: flight_number
     type: string
     mode: r
-    description: Flight number assgned by the airline operator, including
+    description: Flight number assigned by the airline operator, including
       operator prefix
 
-  - id: flight-phase
-    optional: true
+  - id: flight_phase
     type: enum
     mode: r
     description: Phase of flight
     enum-values:
       - name: gate
-        key: 0
-        description: TBD
-      - name: taxi
         key: 1
         description: TBD
-      - name: takeoff
+      - name: taxi
         key: 2
         description: TBD
-      - name: climb
+      - name: takeoff
         key: 3
         description: TBD
-      - name: cruise
+      - name: climb
         key: 4
         description: TBD
-      - name: descent
+      - name: cruise
         key: 5
+        description: TBD
+      - name: descent
+        key: 6
         description: TBD

@@ -15,65 +15,74 @@ resources:
   - id: altitude
     type: float
     mode: r
-    description: Aircraft Baro Corrected Pressure Altitude in meters, generally
-      sent at a minimum nominal rate of 1 Hz
+    unit: m
+    description: Aircraft Baro-Corrected Pressure Altitude, generally sent at a
+      minimum nominal rate of 1 Hz
 
-  - id: ground-speed
+  - id: ground_speed
     optional: true
     type: float
     mode: r
-    description: Ground speed in meters per second, generally sent at a minimum
-      nominal rate of 1 Hz
+    unit: m/s
+    description: Ground speed, generally sent at a minimum nominal rate of 1 Hz
 
-  - id: heading-true
+  - id: heading_true
     optional: true
     type: float
     mode: r
+    unit: °
     description: Direction the aircraft is pointed relative to true north
-      in degrees
 
   - id: latitude
     type: float
     mode: r
-    description: Aircraft present position latitude in degrees
+    unit: °
+    description: Aircraft present position latitude
 
   - id: longitude
     type: float
     mode: r
-    description: Aircraft present position longitude in degrees
+    unit: °
+    description: Aircraft present position longitude
 
   - id: mach
     optional: true
     type: float
     mode: r
-    description: Aircraft speed in mach number
+    unit: mach
+    description: Aircraft speed
 
-  - id: air-speed
+  - id: air_speed
     optional: true
     type: float
     mode: r
-    description: Aircraft air speed in meters per second
+    unit: m/s
+    description: Aircraft air speed
 
-  - id: temperature-static
+  - id: temperature_static
     optional: true
     type: float
     mode: r
+    unit: °C
     description: Outside air temperature
 
-  - id: track-angle-true
+  - id: track_angle_true
     optional: true
     type: float
     mode: r
+    unit: °
     description: Direction the aircraft is moving relative to true north
 
-  - id: wind-direction
+  - id: wind_direction
     optional: true
     type: float
     mode: r
+    unit: °
     description: Wind Direction relative to true north
 
-  - id: wind-speed
+  - id: wind_speed
     optional: true
     type: float
     mode: r
-    description: Wind Speed
+    unit: m/s
+    description: Wind speed
