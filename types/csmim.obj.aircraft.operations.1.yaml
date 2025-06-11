@@ -66,10 +66,11 @@ resources:
       when a new flight leg starts
 
   - id: flight_number
-    type: string
+    type: string[]
     mode: r
     description: Flight number assigned by the airline operator, including
-      operator prefix
+      operator prefix. This field may contain code share flight numbers if
+      available.
 
   - id: flight_phase
     type: enum

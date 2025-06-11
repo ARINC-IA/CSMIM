@@ -9,13 +9,13 @@ description: >
   The time triggers type resides at the path "/TBD"
 
 resources:
-  - id: hr
+  - id: hour
     type: uint
     mode: r
     description: The current UTC hour using 24-hour notation, updated when
       the hour changes
 
-  - id: min
+  - id: minute
     type: uint
     mode: r
     description: The current UTC minute, updated when the minute changes
