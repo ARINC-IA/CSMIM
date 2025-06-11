@@ -37,19 +37,6 @@ resources:
     mode: r
     description: Whether the CSMIM system is in a maintenance mode
 
-  - id: comm_gnd_avail
-    optional: true
-    type: bool
-    mode: r
-    description: Whether a terrestrial network-based offboard comm system is
-      available
-
-  - id: comm_sat_avail
-    optional: true
-    type: bool
-    mode: r
-    description: Whether a sat-based offboard comm system is available
-
   - id: smoke
     optional: true
     type: bool
