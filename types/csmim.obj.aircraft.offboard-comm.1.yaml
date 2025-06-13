@@ -3,7 +3,7 @@
 id: csmim.obj.aircraft.offboard-comm.1
 description: >
   The offboard-comm type provides discrete values, sent as boolean, indicating
-  the state of aircraft offboard communication. All messages in this type will 
+  the state of aircraft offboard communication. All messages in this type will
   be published with the MQTT retain flag set and are not expected to be periodic
   messages.
 
