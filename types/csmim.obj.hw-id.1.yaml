@@ -1,0 +1,19 @@
+%YAML 1.2
+---
+id: csmim.obj.hw-id.1
+description: >
+  Static identification data for a hardware part. This object type ensures
+  consistent naming of HW identification attributes. The type is meant to be
+  a base for many different types to derive from. Even where this type is not
+  explicitly required by the knowledge base, manufacturers should use it to
+  whenever they specify HW identification data.
+
+attributes:
+  - key: mfr
+    description: Manufacturer code of the hardware part
+
+  - key: partno
+    description: Hardware part number
+
+  - key: serial
+    description: Hardware serial number
