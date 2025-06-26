@@ -17,3 +17,5 @@ attributes:
 
   - key: serial
     description: Hardware serial number
+
+resources: []
