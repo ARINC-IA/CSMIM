@@ -1,7 +1,7 @@
 %YAML 1.2
 ---
 id: csmim.obj.bite-reporter.1
-supertypes: [csmim.obj.hw-id.1.yaml]
+supertypes: [csmim.obj.hw-id.1]
 description: An entity that provides failure messages.
 attributes:
   - key: location
