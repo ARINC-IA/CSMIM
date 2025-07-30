@@ -17,4 +17,3 @@ resources:
     mode: r
     unit: °
     description: Wind direction relative to true north
-

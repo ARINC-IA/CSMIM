@@ -16,7 +16,9 @@ resources:
     mode: r
     description: Whether the PA Keyline is active
 
-    FIXME: maybe v1/data/aircraft/cabin/announcement/<zone/room/area>/passenger_address_active
+    FIXME: >
+      maybe v1/data/aircraft/cabin/
+              announcement/<zone/room/area>/passenger_address_active
 
   - id: pre_recorded_audio_active
     optional: true
@@ -24,4 +26,6 @@ resources:
     mode: r
     description: Whether the PRAM Keyline is active
 
-    FIXME: maybe v1/data/aircraft/cabin/announcement/<zone/room/area>/pre_recorded_audio_active
+    FIXME: >
+      maybe v1/data/aircraft/cabin/
+              announcement/<zone/room/area>/pre_recorded_audio_active

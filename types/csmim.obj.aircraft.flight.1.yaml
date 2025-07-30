@@ -2,7 +2,7 @@
 ---
 id: csmim.obj.aircraft.flight.1
 description: >
-  Flight data includes information about the current mission. This data is 
+  Flight data includes information about the current mission. This data is
   generally provided by flight management system(s) and relayed to the CSMIM
   system. Data is expected to be sent to the CSMIM system at either the native
   bus rate that is received by the data relay functionality, or at a sub-
