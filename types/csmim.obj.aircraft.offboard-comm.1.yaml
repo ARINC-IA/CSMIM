@@ -7,7 +7,7 @@ description: >
   retain flag set and are not expected to be periodic messages.
 
 attributes:
-  - id: name
+  - key: name
     description: >
       human readable name of the communication link e. g. "Airline-Cellular",
       "Highspeed-SATCOM", "Classic-SATCOM", "Airport-Gatelink"
