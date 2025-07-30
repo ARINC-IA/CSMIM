@@ -1,0 +1,23 @@
+%YAML 1.2
+---
+id: csmim.obj.aircraft.lighted-signs.1
+description: >
+  The lighted sings type provides discrete values, sent as booleans, indicating
+  the state of the different lighted signs.
+
+resources:
+  - id: fasten_seatbelt
+    type: bool
+    mode: r
+    description: Whether the fasten seat belt sign is active
+
+  - id: no_smoking
+    type: bool
+    mode: r
+    description: Whether the no smoking sign is active
+
+  - id: no_electronic_device
+    optional: true
+    type: bool
+    mode: r
+    description: Whether the no passenger electronic devices sign is active

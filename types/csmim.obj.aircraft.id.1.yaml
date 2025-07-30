@@ -1,0 +1,28 @@
+%YAML 1.2
+---
+id: csmim.obj.aircraft.id.1
+description: >
+  Aircraft identification data and type information
+
+resources:
+  - id: tail_number
+    type: string
+    mode: r
+    description: Aircraft Registration Number
+
+  - id: type
+    type: string
+    mode: r
+    description: Aircraft registration ICAO 4-character aircraft type
+
+  - id: serial
+    optional: true
+    type: string
+    mode: r
+    description: Aircraft serial number assigned by manufacturer
+
+  - id: icao24
+    optional: true
+    type: bytes
+    mode: r
+    description: 24-bit ICAO identification hex code

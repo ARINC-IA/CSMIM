@@ -1,0 +1,26 @@
+%YAML 1.2
+---
+id: csmim.obj.aircraft.speed.1
+description: >
+  The aircraft speed data type provides aircraft data that is
+  managed by avionics systems and relayed to the CSMIM system.
+
+resources:
+  - id: true_air
+    type: float
+    mode: r
+    unit: kts
+    description: Aircraft true air speed in meters per second
+
+  - id: ground
+    type: float
+    mode: r
+    unit: kts
+    description: Ground speed in meters per second
+
+  - id: mach
+    optional: true
+    type: float
+    mode: r
+    unit: mach
+    description: Aircraft speed in mach number

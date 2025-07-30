@@ -6,16 +6,15 @@ description: >
   to run triggered periodic operations. Time trigger resource messages are
   sent with the MQTT retain flag set.
 
-  The time triggers type resides at the path "/TBD"
-
 resources:
   - id: hour
     type: uint
     mode: r
-    description: The current UTC hour using 24-hour notation, updated when
+    description: The current hour using 24-hour notation, updated when
       the hour changes
 
   - id: minute
+    optional: true
     type: uint
     mode: r
-    description: The current UTC minute, updated when the minute changes
+    description: The current minute, updated when the minute changes

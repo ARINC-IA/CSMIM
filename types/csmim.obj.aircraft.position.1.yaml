@@ -1,0 +1,30 @@
+%YAML 1.2
+---
+id: csmim.obj.aircraft.position.1
+description: >
+  The aircraft position data type provides aircraft navigation type data that
+  is managed by avionics systems and relayed to the CSMIM system. Data is
+  expected to be sent to the CSMIM system at either the native bus rate that is
+  received by the data relay functionality, or at a sub-sampled bus rate. The
+  messages provided herein will have the MQTT retain flag set if the nominal
+  message period is > 1 sec.
+
+resources:
+  - id: latitude
+    type: float
+    mode: r
+    unit: °
+    description: Aircraft present position latitude in decimal degrees
+
+  - id: longitude
+    type: float
+    mode: r
+    unit: °
+    description: Aircraft present position longitude in decimal degrees
+
+  - id: altitude
+    optional: true
+    type: float
+    mode: r
+    unit: ft
+    description: Aircraft baro corrected pressure altitude
