@@ -9,8 +9,8 @@ description: >
 attributes:
   - key: name
     description: >
-      human readable name of the communication link e. g. "Airline-Cellular",
-      "Highspeed-SATCOM", "Classic-SATCOM", "Airport-Gatelink"
+      human readable name of the communication link e. g. "Airline Cellular",
+      "Highspeed SATCOM", "Classic SATCOM", "Airport Gatelink"
 
 resources:
   - id: state
@@ -19,9 +19,11 @@ resources:
     description: Specifies the connection state of the communication link
     enum-values:
       - name: Offline
-        key: 0
-      - name: Online
         key: 1
-      - name: Limited
+      - name: Online
         key: 2
+      - name: Limited
+        key: 3
         description: Reduced functionality mode
+
+    FIXME: maybe use v1/data/aircraft/information/cabin/connection/+/state

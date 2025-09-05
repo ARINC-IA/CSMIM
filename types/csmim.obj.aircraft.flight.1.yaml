@@ -9,6 +9,8 @@ description: >
   sampled bus rate. The messages provided herein will have the MQTT retain flag
   set if the nominal message period is > 1 sec.
 
+  FIXME: maybe use v1/data/aircraft/information/flight/
+
 resources:
   - id: origin
     type: string
@@ -27,29 +29,33 @@ resources:
       operator prefix. This field may contain code share flight numbers if
       available.
 
-  - id: phase_arinc
+  - id: phase
     type: enum
     mode: r
-    description: Phase of flight according to ARINC834-8
+    description: Phase of flight similar to ARINC834-8
     enum-values:
-      - name: gate
-        key: 0
-        description: parked
-      - name: taxi
+      - name: power_on
         key: 1
+        description: system is powered on; not in another phase
+      - name: taxi
+        key: 2
         description: after 1st engine start
       - name: takeoff
-        key: 2
+        key: 3
         description: after 1st engine take-off power
       - name: climb
-        key: 3
+        key: 4
         description: after lift-off
       - name: cruise
-        key: 4
-        description: above 1500 ft
-      - name: descent
         key: 5
+        description: above 1500 ft
+        FIXME: the agl alt is not how our phases change, we will need to come 
+          up with a different description.
+
+      - name: descent
+        key: 6
         description: below 800 ft
+        FIXME: Same comment as cruise
 
   - id: leg_start
     optional: true

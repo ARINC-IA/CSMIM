@@ -10,3 +10,11 @@ Airport-Gatelink-based communication system
 
 **satcom**
 satellite-based offboard communication system
+
+**satcom_geo**
+geosynchronous satellite-based offboard communication system
+
+**satcom_leo**
+low-earth orbit satellite-based offboard communication system
+
+* Others?

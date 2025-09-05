@@ -10,13 +10,13 @@ resources:
     type: float
     mode: r
     unit: kts
-    description: Aircraft true air speed in meters per second
+    description: Aircraft true air speed in knots
 
   - id: ground
     type: float
     mode: r
     unit: kts
-    description: Ground speed in meters per second
+    description: Ground speed in knots
 
   - id: mach
     optional: true

@@ -3,7 +3,7 @@
 id: csmim.obj.aircraft.lighted-signs.1
 description: >
   The lighted sings type provides discrete values, sent as booleans, indicating
-  the state of the different lighted signs.
+  the state of the different lighted signs in the cabin.
 
 resources:
   - id: fasten_seatbelt
