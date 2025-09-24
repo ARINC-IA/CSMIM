@@ -17,13 +17,7 @@ attributes:
       specific and managed by aircraft config manager.
   - key: ata
     description: >
-      4-6 digit ATA chapter acc. to BAABi fault, e.g. "2522", aircraft type
-      specific and managed by aircraft config manager.
-  - key: class
-    optional: true
-    description: >
-      Failure class to indicate the severity (e. g. impacted crews). Using
-      Single Aisle definition integer 1 to 3 (see ARINC 604), aircraft type
+      6 digit ATA chapter acc. to BAABi fault, e.g. "252201", aircraft type
       specific and managed by aircraft config manager.
 
 resources:
@@ -66,6 +60,12 @@ resources:
         type: string
         description: Supplier-defined human-readable description of the fault
           for additional guidance of the maintenance personnel.
+      - key: class
+        optional: true
+        description: >
+          Failure class to indicate the severity (e. g. impacted crews). Using
+          Single Aisle definition integer 1 to 3 (see ARINC 604), aircraft type
+          specific and managed by aircraft config manager.
       - key: time
         optional: true
         type: utc
