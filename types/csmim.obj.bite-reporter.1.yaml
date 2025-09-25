@@ -62,10 +62,17 @@ resources:
           for additional guidance of the maintenance personnel.
       - key: class
         optional: true
+        type: enum
         description: >
-          Failure class to indicate the severity (e. g. impacted crews). Using
-          Single Aisle definition integer 1 to 3 (see ARINC 604), aircraft type
-          specific and managed by aircraft config manager.
+          Failure class to indicate the severity (e. g. impacted crews).
+          Aircraft type specific and managed by aircraft config manager.
+        enum-values:
+          - name: flight_deck_effect
+            key: 1
+          - name: cabin_effect
+            key: 2
+          - name: minor_effect
+            key: 3
       - key: time
         optional: true
         type: utc
@@ -83,4 +90,4 @@ resources:
         description: Reference to the corresponding fault message published in
           the "bite" resource.
       - key: content
-        type: binary
+        type: bytes
