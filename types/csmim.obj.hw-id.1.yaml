@@ -15,6 +15,10 @@ attributes:
   - key: partno
     description: Hardware part number
 
+  - key: partname
+    optional: true
+    description: Human-readable name of the hardware part
+
   - key: serial
     description: Hardware serial number
 
