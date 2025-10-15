@@ -7,25 +7,26 @@ FIXME: >
 
 id: csmim.obj.aircraft.audio-signals.1
 description: >
-  The audio signals type provides discrete values, sent as booleans, indicating
+  The audio signals type provides an indicator of
   the state of the different audio channels being used.
 
 resources:
-  - id: passenger_address_active
-    type: bool
+  - id: passenger_address
+    type: enum
     mode: r
-    description: Whether the PA Keyline is active
+    description: Indicates the state of the passenger address system
+    enum-values:
+      - name: off
+        key: 1
+        description: passenger address system is not active
+      - name: active
+        key: 2
+        description: passenger address system is active
+      - name: pram
+        key: 3
+        description: pre-recorded message is active
+    
 
     FIXME: >
       maybe v1/data/aircraft/cabin/
-              announcement/<zone/room/area>/passenger_address_active
-
-  - id: pre_recorded_audio_active
-    optional: true
-    type: bool
-    mode: r
-    description: Whether the PRAM Keyline is active
-
-    FIXME: >
-      maybe v1/data/aircraft/cabin/
-              announcement/<zone/room/area>/pre_recorded_audio_active
+              announcement/<zone/room/area>/passenger_address

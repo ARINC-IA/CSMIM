@@ -9,8 +9,6 @@ description: >
   sampled bus rate. The messages provided herein will have the MQTT retain flag
   set if the nominal message period is > 1 sec.
 
-  FIXME: maybe use v1/data/aircraft/information/flight/
-
 resources:
   - id: origin
     type: string
@@ -32,30 +30,45 @@ resources:
   - id: phase
     type: enum
     mode: r
-    description: Phase of flight similar to ARINC834-8
+    description: Phase of flight according to ARINC 854 §3.2.10
+    FIXME: With notes about A843 equivalent and associated description
     enum-values:
-      - name: power_on
+      - name: pre_flight_ground
         key: 1
-        description: system is powered on; not in another phase
-      - name: taxi
+        description: system is powered
+        FIXME: Equivalent to A843 GATE, when gnd-speed <= 2 kts
+      - name: taxi_out
         key: 2
         description: after 1st engine start
+        FIXME: A843 TAXI, when ground speed >= 2 kts
       - name: takeoff
         key: 3
         description: after 1st engine take-off power
+        FIXME: A843 TAKEOFF, when CAS >= 80 kts
       - name: climb
         key: 4
         description: after lift-off
+        FIXME: A843 CLIMB, when vertical speed >= 100 f/min
       - name: cruise
         key: 5
         description: above 1500 ft
-        FIXME: the agl alt is not how our phases change, we will need to come 
-          up with a different description.
-
+        FIXME: A843 CRUISE, when vert-speed <= 100 f/min
       - name: descent
         key: 6
         description: below 800 ft
-        FIXME: Same comment as cruise
+        FIXME: A843 DESCENT, when vert-speed <= -100 f/min
+      - name: touch_down
+        key: 7
+        description: wheels on ground
+        FIXME: A843 no equivalent
+      - name: taxi_in
+        key: 8
+        description: speed drops below 50 kts
+        FIXME: A843 TAXI, when CAS <= 80 kts
+      - name: post_flight_ground
+        key: 9
+        description: engines off
+        FIXME: A843 GATE, when gnd-speed <= 2 kts
 
   - id: leg_start
     optional: true

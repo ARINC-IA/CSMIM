@@ -25,5 +25,3 @@ resources:
       - name: Limited
         key: 3
         description: Reduced functionality mode
-
-    FIXME: maybe use v1/data/aircraft/information/cabin/connection/+/state

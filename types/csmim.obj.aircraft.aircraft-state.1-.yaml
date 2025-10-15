@@ -1,0 +1,62 @@
+%YAML 1.2
+---
+
+FIXME: >
+  not yet linked in path folder.
+  might have to be split into different domains and systems, see below
+
+id: csmim.obj.aircraft.aircraft-state.1
+description: >
+  The aircraft state provides discrete values, sent as boolean, indicating
+  the general state of the aircraft. All messages in this type will be sent
+  with the MQTT retain flag set and are not expected to be periodic messages.
+
+resources:
+  # - id: maintenance_mode
+  #   type: bool
+  #   mode: r
+  #   description: Whether the CSMIM system is in a maintenance mode
+  #   FIXME: maybe v1/data/core/csmim/state/maintenance_mode
+  #   MOVED: csmim.obj.core.system-state.1
+
+  # - id: on_ground
+  #   optional: true
+  #   type: bool
+  #   mode: r
+  #   description: Whether the aircraft is on the ground
+
+  #   FIXME: >
+  #     maybe v1/data/aircraft/landinggear/wheels/all/on_ground
+  #     and   v1/data/aircraft/landinggear/wheels/any/on_ground
+  #     MOVED: csmim.obj.aircraft.landing-gear-indication.1
+
+  # - id: engines_on
+  #   optional: true
+  #   type: bool
+  #   mode: r
+  #   description: Whether any aircraft engines are on
+
+  #   FIXME: maybe v1/data/aircraft/engineindication/engines_on
+  #   MOVED: csmim.obj.aircraft.engine-indication.1
+
+  # - id: offboard_comm_available
+  #   optional: true
+  #   type: bool
+  #   mode: r
+  #   description: Whether any offboard communication mean is currently online
+  #   FIXME: maybe use v1/data/aircraft/information/cabin/connection/+/state
+  #   MOVED: csmim.obj.aircraft.offboard-comm.1
+
+# removed safety critical parameters
+#  - id: decompression
+#    optional: true
+#    type: bool
+#    mode: r
+#    description: Whether the aircraft is in a state of decompression
+
+# removed safety critical parameters
+#  - id: smoke
+#    optional: true
+#    type: bool
+#    mode: r
+#    description: Whether a smoke alert is on
