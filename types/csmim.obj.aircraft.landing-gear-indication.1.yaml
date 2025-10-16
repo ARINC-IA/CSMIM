@@ -9,7 +9,6 @@ description: >
 
 resources:
   - id: on_ground
-    optional: true
     type: bool
     mode: r
     description: Whether the aircraft is on the ground

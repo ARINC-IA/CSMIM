@@ -8,10 +8,7 @@ description: >
   with the MQTT retain flag set and are not expected to be periodic messages.
 
 resources:
-  - id: engines_on
-    optional: true
+  - id: is_running
     type: bool
     mode: r
-    description: Whether any aircraft engines are on
-
-    FIXME: maybe v1/data/aircraft/engineindication/engines_on
+    description: Indicator of aircraft engines is running

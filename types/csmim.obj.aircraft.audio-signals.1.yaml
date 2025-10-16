@@ -25,8 +25,3 @@ resources:
       - name: pram
         key: 3
         description: pre-recorded message is active
-    
-
-    FIXME: >
-      maybe v1/data/aircraft/cabin/
-              announcement/<zone/room/area>/passenger_address
