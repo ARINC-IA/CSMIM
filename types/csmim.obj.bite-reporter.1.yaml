@@ -26,14 +26,6 @@ resources:
     mode: r
     description: List of faults. Ideally only one fault message per device.
     dict-items:
-      - key: mode
-        type: enum
-        description: Indication which process produced the fault message.
-        enum-values:
-          - name: continuous_monitoring
-            key: 1
-          - name: interactive_test
-            key: 2
       - key: root_fault_code
         type: uint
         description: Supplier-assigned root fault code. Compressed information
