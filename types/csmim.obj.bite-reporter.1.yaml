@@ -6,15 +6,16 @@ supertypes:
 description: An entity that provides fault messages.
 
 attributes:
+  - key: partname  # from csmim.obj.hw-id.1
+    optional: false
+    description: Human-readable name of the hardware part
+
   - key: location
     description: >
-      Unique physical location of the equipment (equivalent to Airbus FIN),
+      Unique physical location of the equipment,
       aircraft type specific and managed by aircraft config manager.
-  - key: function
-    description: >
-      Functional title of the equipment, may contain installation specifics
-      (e.g. "SENSOR HUMIDITY, GALLEY1", "SENSOR CRNT, FOODREST"), aircraft type
-      specific and managed by aircraft config manager.
+      Equivalent to Airbus FIN, may contain additional functional context.
+
   - key: ata
     description: >
       6 digit ATA chapter acc. to BAABi fault, e.g. "252201", aircraft type
@@ -33,9 +34,9 @@ resources:
           procedures. Valid range is 1-20.
       - key: 2nd_obj
         optional: true
-        type: string
-        description: In case the equipment needs to accuse a second object (e.g.
-          missing flight deck data, probe, wiring). The supplier defines the
+        type: string[]
+        description: In case the equipment needs to accuse second object(s),
+          e.g. missing flight deck data, probe, wiring. The supplier defines the
           possible values for its equipment.
       - key: event_codes
         type: uint[]
@@ -65,6 +66,18 @@ resources:
             key: 2
           - name: minor_effect
             key: 3
+      - key: priority
+        type: enum
+        description: >
+          Whether the failure message accuses system-internal components or
+          components external to the system; according to ARINC 604. This
+          influences the priority of the failure message because internal
+          accusations are considered more reliable than external ones.
+        enum-values:
+          - name: internal
+            key: 1
+          - name: external
+            key: 2
       - key: time
         optional: true
         type: utc
