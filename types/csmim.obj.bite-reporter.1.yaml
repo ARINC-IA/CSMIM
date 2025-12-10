@@ -1,0 +1,98 @@
+%YAML 1.2
+---
+id: csmim.obj.bite-reporter.1
+supertypes:
+  - csmim.obj.hw-id.1
+description: An entity that provides fault messages.
+
+attributes:
+  - key: partname  # from csmim.obj.hw-id.1
+    optional: false
+    description: Human-readable name of the hardware part
+
+  - key: location
+    description: >
+      Unique physical location of the equipment,
+      aircraft type specific and managed by aircraft config manager.
+      Equivalent to Airbus FIN, may contain additional functional context.
+
+  - key: ata
+    description: >
+      6 digit ATA chapter acc. to BAABi fault, e.g. "252201", aircraft type
+      specific and managed by aircraft config manager.
+
+resources:
+  - id: bite_faults
+    type: dict[]
+    mode: r
+    description: List of faults. Ideally only one fault message per device.
+    dict-items:
+      - key: root_fault_code
+        type: uint
+        description: Supplier-assigned root fault code. Compressed information
+          derived from clustering device fault events into troubleshooting
+          procedures. Valid range is 1-20.
+      - key: 2nd_obj
+        optional: true
+        type: string[]
+        description: In case the equipment needs to accuse second object(s),
+          e.g. missing flight deck data, probe, wiring. The supplier defines the
+          possible values for its equipment.
+      - key: event_codes
+        type: uint[]
+        description: Supplier-assigned root cause code, clearly identifying the
+          triggered fault monitor(s) (e.g. from FMEA). For deep troubleshooting
+          by maintenance specialists.
+      - key: supplier_code
+        optional: true
+        type: string
+        description: Supplier-defined internal fault ID for additional guidance
+          or deep troubleshooting.
+      - key: text
+        optional: true
+        type: string
+        description: Supplier-defined human-readable description of the fault
+          for additional guidance of the maintenance personnel.
+      - key: class
+        optional: true
+        type: enum
+        description: >
+          Failure class to indicate the severity (e. g. impacted crews).
+          Aircraft type specific and managed by aircraft config manager.
+        enum-values:
+          - name: flight_deck_effect
+            key: 1
+          - name: cabin_effect
+            key: 2
+          - name: minor_effect
+            key: 3
+      - key: priority
+        type: enum
+        description: >
+          Whether the failure message accuses system-internal components or
+          components external to the system; according to ARINC 604. This
+          influences the priority of the failure message because internal
+          accusations are considered more reliable than external ones.
+        enum-values:
+          - name: internal
+            key: 1
+          - name: external
+            key: 2
+      - key: time
+        optional: true
+        type: utc
+        description: Time of fault detection as additional information. May make
+          sense if detection was much before publication.
+
+  - id: bite_data
+    type: dict[]
+    mode: r
+    racc: true
+    description: Engineering data (access restricted)
+    dict-items:
+      - key: root_fault_code
+        type: uint
+        description: Reference to the corresponding fault message published in
+          the "bite" resource.
+      - key: content
+        type: bytes
