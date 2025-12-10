@@ -4,7 +4,7 @@ id: csmim.obj.seat.1
 supertypes:
   - csmim.obj.seat.sas-operational-status.1
   - csmim.obj.seat.occupied-status.1
-  # csmim.obj.fault-reporter.1 (does not exist yet)
+  - csmim.obj.bite-reporter.1
 description: >
   Represents the overall status of a seat within the cabin. The seat could be
   any type of seat. It may also comprise additional furniture that belongs to

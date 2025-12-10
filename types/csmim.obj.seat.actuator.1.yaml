@@ -3,7 +3,7 @@
 id: csmim.obj.seat.actuator.1
 supertypes:
   - csmim.obj.seat.sas-operational-status.1
-  # - csmim.obj.fault-report.1 # Does not exist yet
+  - csmim.obj.bite-reporter.1
 description: >
   Represents a seat actuator in the cabin. Manufacturers are encouraged to
   derive from this type to add their manufacturer-specific data.
