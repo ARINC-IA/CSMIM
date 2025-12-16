@@ -41,14 +41,14 @@ resources:
     description: Status of actuator movement.
     enum-values:
       - name: stopped
-        key: 0
+        key: 1
         description: Actuator is stopped, no movement.
       - name: forward
-        key: 1
+        key: 2
         description: Actuator is moving towards maximum position 100%.
       - name: backward
-        key: 2
+        key: 3
         description: Actuator is moving towards minimum position 0%.
       - name: retrograde
-        key: 3
+        key: 4
         description: Entrapment detected, actuator is moving in reverse.

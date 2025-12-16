@@ -14,21 +14,21 @@ resources:
       seat. This enumeration may be extended in the future.
     enum-values:
       - name: initialization
-        key: 0
-      - name: normal
         key: 1
-      - name: limited
+      - name: normal
         key: 2
+      - name: limited
+        key: 3
         description: Some functionality may not be available.
       - name: fault
-        key: 3
+        key: 4
         description: The LRU may provide degraded functionality.
       - name: fatal
-        key: 4
+        key: 5
         description: The LRU has a fatal fault and is non-functional.
       - name: calibration
-        key: 5
-      - name: disabled
         key: 6
-      - name: offline
+      - name: disabled
         key: 7
+      - name: offline
+        key: 8

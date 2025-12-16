@@ -31,7 +31,7 @@ resources:
       to handle other values than those defined here for upward compatibility.
     enum-values:
       - name: undefined
-        key: 0
+        key: 99
         description: The seat is not in a defined seat position. E.g. the seat
           is in TTL position, but the leg rest is up.
       - name: ttl
@@ -90,10 +90,10 @@ resources:
     description: The last safety-related event on seat and suite level.
     enum-values:
       - name: none
-        key: 0
-      - name: seat_obstruction
         key: 1
-      - name: door_obstruction
+      - name: seat_obstruction
         key: 2
-      - name: divider_obstruction
+      - name: door_obstruction
         key: 3
+      - name: divider_obstruction
+        key: 4

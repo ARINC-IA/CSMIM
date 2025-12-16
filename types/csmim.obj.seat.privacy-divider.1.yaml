@@ -29,13 +29,13 @@ resources:
       upward compatibility.
     enum-values:
       - name: undefined
-        key: 0
+        key: 1
         description: The privacy divider is not in a defined position. E.g. the
           divider has stopped in mid-motion.
       - name: upper
-        key: 1
-      - name: lower
         key: 2
+      - name: lower
+        key: 3
 
   - id: safety_event
     mode: r
@@ -43,9 +43,9 @@ resources:
     description: The last safety-related event on the privacy divider.
     enum-values:
       - name: none
-        key: 0
+        key: 1
       - name: divider_obstruction
-        key: 3
+        key: 4
 
   - id: motion
     mode: x

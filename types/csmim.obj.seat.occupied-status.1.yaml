@@ -11,11 +11,11 @@ resources:
     description: The occupied status of the seat.
     enum-values:
       - name: none
-        key: 0
+        key: 1
         description: The seat is empty.
       - name: occupied
-        key: 1
+        key: 2
         description: The seat is occupied with a person.
       - name: baggage
-        key: 2
+        key: 3
         description: Baggage is detected on seat.
