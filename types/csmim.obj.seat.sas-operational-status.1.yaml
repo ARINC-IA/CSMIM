@@ -1,0 +1,34 @@
+%YAML 1.2
+---
+id: csmim.obj.seat.sas-operational-status.1
+description: >
+  Interface which describes the operational status of a complete seat, a device
+  or a group of devices in a seat within the cabin.
+
+resources:
+  - id: operational_status
+    mode: r
+    type: enum
+    description: >
+      The operational status of the seat, device or group of devices in the
+      seat. This enumeration may be extended in the future.
+    enum-values:
+      - name: initialization
+        key: 1
+      - name: normal
+        key: 2
+      - name: limited
+        key: 3
+        description: Some functionality may not be available.
+      - name: fault
+        key: 4
+        description: The LRU may provide degraded functionality.
+      - name: fatal
+        key: 5
+        description: The LRU has a fatal fault and is non-functional.
+      - name: calibration
+        key: 6
+      - name: disabled
+        key: 7
+      - name: offline
+        key: 8

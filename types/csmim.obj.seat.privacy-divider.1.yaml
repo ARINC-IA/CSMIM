@@ -1,0 +1,104 @@
+%YAML 1.2
+---
+id: csmim.obj.seat.privacy-divider.1
+description: >
+  Represents the status of a privacy divider which belongs to a first-class or
+  business-class seat within the cabin.
+
+attributes:
+  - key: row
+    description: Seat row number as indicated in the cabin layout and to the
+      passenger. For example "11". Note that seat row numbers need not be
+      consecutive or always start at 1.
+  - key: seat
+    description: Seat position name in a column of seats, as indicated in the
+      cabin layout and to the passenger. For example "A" or "C". Note that these
+      need not be consecutive and can change from row to row.
+  - key: divider_id
+    description: Identifier of the privacy divider.
+
+resources:
+  - id: position
+    mode: r
+    type: enum
+    description: >
+      The position of the privacy divider, out of a list of predefined
+      positions. A particular privacy divider model may support only a subset of
+      the positions. The enumeration may be extended in the future, therefore
+      clients must be able to handle other values than those defined here for
+      upward compatibility.
+    enum-values:
+      - name: undefined
+        key: 1
+        description: The privacy divider is not in a defined position. E.g. the
+          divider has stopped in mid-motion.
+      - name: upper
+        key: 2
+      - name: lower
+        key: 3
+
+  - id: safety_event
+    mode: r
+    type: enum
+    description: The last safety-related event on the privacy divider.
+    enum-values:
+      - name: none
+        key: 1
+      - name: divider_obstruction
+        key: 4
+
+  - id: motion
+    mode: x
+    type: void
+    optional: true
+    description: >
+      Motion command to change the privacy divider position. The divider will
+      send a code 400 response if the combination of "part" and "direction"
+      parameters is invalid. The divider will send a code 501 response if the
+      specified "mode", "part" or "direction" are not supported by the
+      particular privacy divider model.
+
+      The system architecture should be designed such that there is only one
+      CSMIM endpoint sending commands to this resource. The commanding system
+      should be designed to prevent conflicting commands and avoid rapid command
+      changes, thereby promoting smooth and reliable operation.
+      Despite these architectural safeguards, privacy dividers must
+      independently validate and filter incoming commands to guarantee safe and
+      proper operation under all circumstances. In particular, the control logic
+      must detect and mitigate the effects of conflicting commands.
+    parameters:
+      - key: mode
+        type: enum
+        description: Defines how the seat actuation system reacts on the command
+        enum-values:
+          - name: cyclic
+            key: 1
+            description: Commands needs to be sent cyclically, otherwise the
+              motion will stop. The typical period is 200 ms.
+          - name: once
+            key: 2
+            description: The command needs to be sent only once. The divider
+              will move until reaching the desired position.
+      - key: part
+        type: enum
+        description: Defines whether the whole privacy divider is to be moved,
+          or just a specific part. This enumeration may be extended in the
+          future.
+        enum-values:
+          - name: privacy_divider
+            key: 10
+      - key: direction
+        type: enum
+        description: The direction of the motion. This enumeration may be
+          extended in the future, analogous to the "position" enumeration.
+        enum-values:
+          - name: stop
+            key: 0
+          - name: up
+            key: 100
+          - name: down
+            key: 101
+          - name: in
+            key: 102
+          - name: out
+            key: 103
