@@ -1,0 +1,54 @@
+%YAML 1.2
+---
+id: csmim.obj.seat.actuator.1
+supertypes:
+  - csmim.obj.seat.sas-operational-status.1
+  - csmim.obj.bite-reporter.1
+description: >
+  Represents a seat actuator in the cabin. Manufacturers are encouraged to
+  derive from this type to add their manufacturer-specific data.
+
+attributes:
+  - key: row
+    description: Seat row number as indicated in the cabin layout and to the
+      passenger. For example "11". Note that seat row numbers need not be
+      consecutive or always start at 1.
+  - key: seat
+    description: Seat position name in a column of seats, as indicated in the
+      cabin layout and to the passenger. For example "A" or "C". Note that these
+      need not be consecutive and can change from row to row.
+  - key: actuator_id
+    description: Identifier of the actuator.
+
+resources:
+  - id: is_obstructed
+    mode: r
+    type: bool
+    description: >
+      Whether obstruction was detected during the last motion. The flag will be
+      reset when a new motion starts.
+
+  - id: position
+    mode: r
+    type: float
+    unit: "%"
+    description: The current position of the actuator in percentage of travel.
+      For example, value 0.425 = 42.5%
+
+  - id: movement_status
+    mode: r
+    type: enum
+    description: Status of actuator movement.
+    enum-values:
+      - name: stopped
+        key: 1
+        description: Actuator is stopped, no movement.
+      - name: forward
+        key: 2
+        description: Actuator is moving towards maximum position 100%.
+      - name: backward
+        key: 3
+        description: Actuator is moving towards minimum position 0%.
+      - name: retrograde
+        key: 4
+        description: Entrapment detected, actuator is moving in reverse.

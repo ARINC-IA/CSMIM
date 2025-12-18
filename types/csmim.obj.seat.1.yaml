@@ -1,0 +1,99 @@
+%YAML 1.2
+---
+id: csmim.obj.seat.1
+supertypes:
+  - csmim.obj.seat.sas-operational-status.1
+  - csmim.obj.seat.occupied-status.1
+  - csmim.obj.bite-reporter.1
+description: >
+  Represents the overall status of a seat within the cabin. The seat could be
+  any type of seat. It may also comprise additional furniture that belongs to
+  the seat, for example a privacy divider.
+
+attributes:
+  - key: row
+    description: Seat row number as indicated in the cabin layout and to the
+      passenger. For example "11". Note that seat row numbers need not be
+      consecutive or always start at 1.
+  - key: seat
+    description: Seat position name in a column of seats, as indicated in the
+      cabin layout and to the passenger. For example "A" or "C". Note that these
+      need not be consecutive and can change from row to row.
+
+resources:
+  - id: position
+    mode: r
+    type: enum
+    description: >
+      The position of the seat, out of a list of predefined positions. A
+      particular seat model may support only a subset of the positions. The
+      enumeration may be extended in the future, therefore clients must be able
+      to handle other values than those defined here for upward compatibility.
+    enum-values:
+      - name: undefined
+        key: 99
+        description: The seat is not in a defined seat position. E.g. the seat
+          is in TTL position, but the leg rest is up.
+      - name: ttl
+        key: 1
+        description: The seat is in TTL position. You must not use this as an
+          indication for the seat being safe for TTL; use the "safe_for_ttl"
+          resource instead.
+      - name: ttl2
+        key: 2
+      - name: dine
+        key: 3
+      - name: relax
+        key: 4
+      - name: relax2
+        key: 5
+      - name: bed
+        key: 6
+      - name: user_stored
+        key: 7
+        description: The seat is in a user-stored preset position.
+      - name: dot_disabled_person
+        key: 8
+        description: The seat is in a position for disabled persons to get in
+          the seat.
+      - name: cleaning
+        key: 9
+
+  - id: safe_for_ttl
+    mode: r
+    type: bool
+    description: >
+      Whether all criteria for safe to flight on seat and suite level are
+      fulfilled. That is, the seat is in TTL position and all furniture is
+      stored correctly.
+
+  - id: ttl_lock
+    mode: rw
+    type: bool
+    optional: true
+    description: >
+      Whether the seat cannot be moved out of TTL. Commands that move the seat
+      into TTL position may still be allowed. The lockout feature can be
+      commanded via this interface or another key line.
+
+  - id: child_lockout
+    mode: rw
+    type: bool
+    optional: true
+    description: >
+      Whether seat movements are disabled because the seat is occupied with a
+      child. This feature should be commanded by the crew.
+
+  - id: safety_event
+    mode: r
+    type: enum
+    description: The last safety-related event on seat and suite level.
+    enum-values:
+      - name: none
+        key: 1
+      - name: seat_obstruction
+        key: 2
+      - name: door_obstruction
+        key: 3
+      - name: divider_obstruction
+        key: 4

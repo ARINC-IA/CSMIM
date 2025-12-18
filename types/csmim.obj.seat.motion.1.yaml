@@ -1,0 +1,112 @@
+%YAML 1.2
+---
+id: csmim.obj.seat.motion.1
+supertypes:
+  - csmim.obj.seat.1
+description: >
+  Represents a seat within the cabin that accepts motion commands.
+
+resources:
+  - id: motion
+    mode: x
+    type: void
+    description: >
+      Motion command to change the seat position. The seat will send a code 400
+      response if the combination of "part" and "direction" parameters is
+      invalid. The seat will send a code 501 response if the specified "mode",
+      "part" or "direction" are not supported by the particular seat model.
+
+      The system architecture should be designed such that there is only one
+      CSMIM endpoint sending commands to this resource. The commanding system
+      should be designed to prevent conflicting commands and avoid rapid command
+      changes, thereby promoting smooth and reliable seat operation.
+      Despite these architectural safeguards, seats must independently validate
+      and filter incoming commands to guarantee safe and proper operation under
+      all circumstances. In particular, the seat control logic must detect and
+      mitigate the effects of conflicting commands.
+    parameters:
+      - key: mode
+        type: enum
+        description: Defines how the seat actuation system reacts on the command
+        enum-values:
+          - name: cyclic
+            key: 1
+            description: Commands needs to be sent cyclically, otherwise the
+              motion will stop. The typical period is 500 ms.
+          - name: once
+            key: 2
+            description: The command needs to be sent only once. The seat will
+              move until reaching the desired position.
+      - key: part
+        type: enum
+        description: Defines whether the whole seat is to be moved, or just a
+          specific part of the seat or furniture. This enumeration may be
+          extended in the future.
+        enum-values:
+          - name: seat
+            key: 1
+          - name: leg_rest
+            key: 2
+          - name: seat_pan
+            key: 3
+          - name: back_rest
+            key: 4
+          - name: upper_back_rest
+            key: 5
+          - name: head_rest
+            key: 6
+          - name: sidearm
+            key: 7
+          - name: seat_track
+            key: 8
+          - name: ottoman
+            key: 9
+      - key: direction
+        type: enum
+        description: The direction of the motion. This enumeration may be
+          extended in the future, analogous to the "position" enumeration.
+        enum-values:
+          - name: stop
+            key: 0
+          - name: ttl
+            key: 1
+          - name: ttl2
+            key: 2
+          - name: dine
+            key: 3
+          - name: relax
+            key: 4
+          - name: relax2
+            key: 5
+          - name: bed
+            key: 6
+          - name: user_stored
+            key: 7
+          - name: dot_disabled_person
+            key: 8
+          - name: cleaning
+            key: 9
+          - name: up
+            key: 100
+          - name: down
+            key: 101
+          - name: in
+            key: 102
+          - name: out
+            key: 103
+          - name: forward
+            key: 104
+          - name: backward
+            key: 105
+          - name: rotate_clockwise
+            key: 106
+          - name: rotate_counterclockwise
+            key: 107
+          - name: lefthand_up
+            key: 108
+          - name: lefthand_down
+            key: 109
+          - name: righthand_up
+            key: 110
+          - name: righthand_down
+            key: 111
