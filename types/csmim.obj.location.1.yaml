@@ -1,0 +1,68 @@
+%YAML 1.2
+---
+id: csmim.obj.location.1
+description: >
+  CSMIM location service interface for physical/logical association of devices.
+  A deployment typically provides this service at the path
+  "core/csmim/location". Devices can query or retrieve location data from this
+  service and authorized tools can create or update location assignments.
+
+  The service uses an identification tuple {"mfr","id"} to avoid identifier
+  conflicts between manufacturers.
+
+resources:
+  - id: query
+    mode: x
+    type: dict
+    description: >
+      Clients provide identification data and receive location data. The
+      response structure is deployment-specific.
+    parameters:
+      - key: mfr
+        type: string
+        description: Manufacturer code of the device
+      - key: id
+        type: string
+        description: Device identifier assigned by the manufacturer
+
+  - id: set
+    mode: x
+    type: void
+    description: >
+      Creates or updates location data for a device identifier. Access control
+      is deployment-specific and typically restricted by the OEM.
+    parameters:
+      - key: mfr
+        type: string
+        description: Manufacturer code of the device
+      - key: id
+        type: string
+        description: Device identifier assigned by the manufacturer
+      - key: location
+        type: dict
+        description: >
+          Location data in deployment-specific structure. This may include
+          multiple logical-unit references and manufacturer or airline-specific
+          fields.
+      - key: update
+        type: bool
+        optional: true
+        description: >
+          If true, an existing assignment may be overwritten; if false or
+          omitted, deployment policy determines behavior for existing entries.
+
+  - id: dump
+    mode: x
+    type: dict[]
+    description: >
+      Returns all stored assignments as an array of entries containing
+      identification data and location data. Access control is
+      deployment-specific and typically restricted.
+    parameters: []
+    dict-items:
+      - key: mfr
+        type: string
+      - key: id
+        type: string
+      - key: location
+        type: dict
