@@ -16,13 +16,4 @@ resources:
     optional: true
     type: bool
     mode: r
-    description: Indicates if door slide is armed
-
-    FIXME: >
-      maybe v1/data/aircraft/doors/<type>/any/is_locked
-      compiled from:
-        v1/data/aircraft/doors/passenger/+/is_locked
-        v1/data/aircraft/doors/cargo/+/is_locked
-        v1/data/aircraft/doors/service/+/is_locked
-      maybe also:
-        v1/data/aircraft/information/cabin/lavatory/<location>/is_locked
+    description: Indicates if door slide is armed, if applicable

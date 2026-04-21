@@ -12,7 +12,3 @@ resources:
     type: bool
     mode: r
     description: Whether the aircraft is on the ground
-
-    FIXME: >
-      maybe v1/data/aircraft/landinggear/wheels/all/on_ground
-      and   v1/data/aircraft/landinggear/wheels/any/on_ground
