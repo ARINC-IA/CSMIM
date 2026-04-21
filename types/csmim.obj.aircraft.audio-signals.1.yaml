@@ -12,7 +12,7 @@ resources:
     mode: r
     description: Indicates the state of the passenger address system
     enum-values:
-      - name: off
+      - name: "off"
         key: 1
         description: passenger address system is not active
       - name: active
