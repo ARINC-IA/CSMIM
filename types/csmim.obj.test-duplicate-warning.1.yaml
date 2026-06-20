@@ -1,0 +1,10 @@
+%YAML 1.2
+---
+id: csmim.obj.test-duplicate-warning.1
+description: Temporary type to test duplicate attribute warnings in PR #40.
+
+attributes:
+  - key: mfr
+    description: Duplicate manufacturer attribute for GitHub Actions testing.
+
+resources: []
