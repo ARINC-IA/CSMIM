@@ -1,10 +1,29 @@
 %YAML 1.2
 ---
 id: csmim.obj.test-duplicate-warning.1
-description: "Temporary type to test duplicate attribute warnings in PR #40."
+supertypes:
+  - csmim.obj.seat.1
+description: Temporary type to test duplicate ID warnings in PR 40.
 
 attributes:
   - key: mfr
     description: Duplicate manufacturer attribute for GitHub Actions testing.
 
-resources: []
+resources:
+  - id: safe_for_ttl
+    mode: r
+    type: bool
+    description: Duplicate resource inherited from a supertype.
+
+  - id: motion
+    mode: r
+    type: bool
+    description: Duplicate resource from unrelated existing types.
+
+  - id: movement_status  # duplicate ok: intentional test suppression
+    mode: r
+    type: enum
+    description: Suppressed duplicate resource from an existing type.
+    enum-values:
+      - name: stopped
+        key: 1
