@@ -1,5 +1,26 @@
 #!/usr/bin/env python3
 
+"""
+Emit advisory GitHub Actions warnings for duplicate CSMIM attribute keys
+and resource IDs in object type files changed by a pull request.
+
+The warning is a maintainer review aid, not a validity rule.
+Duplicate names can be intentional, especially for generic resource names.
+The script exits successfully even when it finds duplicates.
+
+Suppress targeted findings with inline comments:
+
+  key: mfr  # from csmim.obj.hw-id.1
+  id: some  # duplicate in csmim.obj.seat.actuator.1
+  id: more  # duplicates in csmim.obj.seat.actuator.1, csmim.obj.directory.1
+
+Long object type lists will trigger the yamllint line length check.
+Suppress all duplicate findings on one declaration line with:
+
+  key: mfr  # duplicate ok: short rationale
+  id: some  # duplicates ok: short rationale
+"""
+
 import argparse
 import glob
 import os
