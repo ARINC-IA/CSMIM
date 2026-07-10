@@ -29,7 +29,7 @@ jobs:
         run: |
           pytest .github/workflows/test-csmim-syntax.py -v
 
-      - name: Warn about duplicate attributes
+      - name: Warn about duplicate IDs
         if: github.event_name == 'pull_request'
         run: |
           python .github/workflows/warn-duplicates.py \

@@ -19,18 +19,27 @@ class Attribute:
 
 
 @dataclass
+class Resource:
+    resource_id: str
+    line: int | None = None
+    comment: str = ""
+
+
+@dataclass
 class ObjectType:
     type_id: str
     path: str
     supertypes: list[str]
     attributes: list[Attribute]
+    resources: list[Resource]
 
 
 @dataclass
 class DuplicateWarning:
     path: str
     line: int
-    key: str
+    kind: str
+    item_id: str
     duplicate_type_ids: list[str]
 
 
@@ -41,8 +50,8 @@ class ScriptError(Exception):
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description=(
-            "Warn about duplicate CSMIM object attribute keys in new or "
-            "changed type files."
+            "Warn about duplicate CSMIM object attribute keys and resource IDs "
+            "in new or changed type files."
         )
     )
     parser.add_argument(
@@ -109,6 +118,15 @@ def local_attributes(content: dict[str, Any]) -> list[Attribute]:
     return result
 
 
+def local_resources(content: dict[str, Any]) -> list[Resource]:
+    """Return resources locally declared in parsed object type content."""
+    result: list[Resource] = []
+    for resource in content.get("resources", []):
+        if isinstance(resource, dict) and "id" in resource:
+            result.append(Resource(resource_id=resource["id"]))
+    return result
+
+
 def find_attribute_line(path: str, key: str) -> tuple[int, str]:
     """
     Find the unique source line for a local attribute declaration.
@@ -134,6 +152,33 @@ def find_attribute_line(path: str, key: str) -> tuple[int, str]:
     return matches[0]
 
 
+def find_resource_line(path: str, resource_id: str) -> tuple[int, str]:
+    """
+    Find the unique source line for a local resource declaration.
+    Returns the 1-based line number and inline comment text.
+    Raises ScriptError if the source line cannot be identified uniquely.
+    """
+    pattern = re.compile(
+        r"^ {0,4}- +id: +"
+        + re.escape(resource_id)
+        + r"(?: +# *(?P<comment>.*))? *$"
+    )
+
+    matches: list[tuple[int, str]] = []
+    with open(path, "r", encoding="utf-8") as stream:
+        for line_number, line in enumerate(stream, start=1):
+            match = pattern.match(line.rstrip("\n"))
+            if match:
+                matches.append((line_number, match.group("comment") or ""))
+
+    if len(matches) != 1:
+        raise ScriptError(
+            f"{path}: found {len(matches)} source lines for resource {resource_id!r}"
+        )
+
+    return matches[0]
+
+
 def load_object_type(path: str, require_line_info: bool) -> ObjectType | None:
     """Load one CSMIM object type, or None if this script cannot use it."""
     content = load_yaml(path)
@@ -143,15 +188,19 @@ def load_object_type(path: str, require_line_info: bool) -> ObjectType | None:
         return None
 
     attributes = local_attributes(content)
+    resources = local_resources(content)
     if require_line_info:
         for attribute in attributes:
             attribute.line, attribute.comment = find_attribute_line(path, attribute.key)
+        for resource in resources:
+            resource.line, resource.comment = find_resource_line(path, resource.resource_id)
 
     return ObjectType(
         type_id=content["id"],
         path=path,
         supertypes=content.get("supertypes", []),
         attributes=attributes,
+        resources=resources,
     )
 
 
@@ -178,6 +227,32 @@ def load_all_object_types(
 
 def has_local_attribute(object_type: ObjectType, key: str) -> bool:
     return any(attribute.key == key for attribute in object_type.attributes)
+
+
+def has_local_resource(object_type: ObjectType, resource_id: str) -> bool:
+    return any(resource.resource_id == resource_id for resource in object_type.resources)
+
+
+def is_ancestor_type(
+    descendant: ObjectType, ancestor_type_id: str, types_by_id: dict[str, ObjectType]
+) -> bool:
+    """Return whether ancestor_type_id is a transitive supertype of descendant."""
+    visited = set()
+    pending = list(descendant.supertypes)
+
+    while pending:
+        type_id = pending.pop(0)
+        if type_id in visited:
+            continue
+        if type_id == ancestor_type_id:
+            return True
+        visited.add(type_id)
+
+        supertype = types_by_id.get(type_id)
+        if supertype is not None:
+            pending.extend(supertype.supertypes)
+
+    return False
 
 
 def nearest_supertype_declaring_attribute(
@@ -234,6 +309,31 @@ def inherits_attribute_from(
     return False
 
 
+def resource_ancestors(
+    object_type: ObjectType, resource_id: str, types_by_id: dict[str, ObjectType]
+) -> set[str]:
+    """Return transitive supertypes that locally declare a resource ID."""
+    result: set[str] = set()
+    visited = set()
+    pending = list(object_type.supertypes)
+
+    while pending:
+        type_id = pending.pop(0)
+        if type_id in visited:
+            continue
+        visited.add(type_id)
+
+        supertype = types_by_id.get(type_id)
+        if supertype is None:
+            continue
+        if has_local_resource(supertype, resource_id):
+            result.add(type_id)
+
+        pending.extend(supertype.supertypes)
+
+    return result
+
+
 def local_attribute_declarations(
     types_by_id: dict[str, ObjectType], key: str, current_type: ObjectType
 ) -> list[str]:
@@ -249,6 +349,33 @@ def local_attribute_declarations(
     return result
 
 
+def local_resource_declarations(
+    types_by_id: dict[str, ObjectType], resource_id: str, current_type: ObjectType
+) -> list[str]:
+    """Find unrelated local declarations of a resource ID."""
+    result: list[str] = []
+    current_resource_ancestors = resource_ancestors(
+        current_type, resource_id, types_by_id
+    )
+
+    for type_id, object_type in sorted(types_by_id.items()):
+        if type_id == current_type.type_id:
+            continue
+        if not has_local_resource(object_type, resource_id):
+            continue
+
+        if is_ancestor_type(current_type, type_id, types_by_id):
+            continue
+        if is_ancestor_type(object_type, current_type.type_id, types_by_id):
+            continue
+        if current_resource_ancestors & resource_ancestors(object_type, resource_id, types_by_id):
+            continue
+
+        result.append(type_id)
+
+    return result
+
+
 def is_suppressed(comment: str, type_id: str) -> bool:
     comment = comment.strip()
     lower_comment = comment.lower()
@@ -257,7 +384,11 @@ def is_suppressed(comment: str, type_id: str) -> bool:
         or lower_comment.startswith("duplicate ")
         or lower_comment.startswith("duplicates ")
     )
-    return has_marker and type_id in comment
+    has_gen_marker = has_marker and (
+        lower_comment.startswith("duplicate ok")
+        or lower_comment.startswith("duplicates ok")
+    )
+    return has_gen_marker or (has_marker and type_id in comment)
 
 
 def duplicate_warnings(
@@ -294,7 +425,31 @@ def duplicate_warnings(
                     DuplicateWarning(
                         path=path,
                         line=attribute.line,
-                        key=attribute.key,
+                        kind="attribute",
+                        item_id=attribute.key,
+                        duplicate_type_ids=duplicate_type_ids,
+                    )
+                )
+
+        for resource in object_type.resources:
+            duplicate_type_ids = local_resource_declarations(
+                types_by_id, resource.resource_id, object_type
+            )
+
+            duplicate_type_ids = [
+                type_id
+                for type_id in duplicate_type_ids
+                if not is_suppressed(resource.comment, type_id)
+            ]
+
+            if duplicate_type_ids:
+                assert resource.line is not None
+                warnings.append(
+                    DuplicateWarning(
+                        path=path,
+                        line=resource.line,
+                        kind="resource",
+                        item_id=resource.resource_id,
                         duplicate_type_ids=duplicate_type_ids,
                     )
                 )
@@ -322,9 +477,12 @@ def escape_annotation_property(value: object) -> str:
 
 
 def emit_annotation(warning: DuplicateWarning) -> None:
-    title = f"Duplicate attribute {warning.key}"
+    title = f"Duplicate {warning.kind} {warning.item_id}"
     duplicates = ", ".join(warning.duplicate_type_ids)
-    message = f"Attribute {warning.key!r} is also declared in {duplicates}."
+    message = (
+        f"{warning.kind.capitalize()} {warning.item_id!r} "
+        f"is also declared in {duplicates}."
+    )
     print(
         "::warning "
         f"file={escape_annotation_property(warning.path)},"
