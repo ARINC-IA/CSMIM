@@ -397,7 +397,21 @@ def local_resource_declarations(
     return result
 
 
+def contains_type_id(comment: str, type_id: str) -> bool:
+    """Return whether comment contains type_id as a complete ID-like token."""
+    tokens = re.split(r"[^A-Za-z0-9._~-]+", comment)
+    return type_id in tokens
+
+
 def is_suppressed(comment: str, type_id: str) -> bool:
+    """Return whether an inline duplicate-suppression comment covers type_id.
+
+    Examples:
+        "from csmim.obj.foo.1"
+        "duplicate in csmim.obj.foo.1"
+        "duplicates in csmim.obj.foo.1, csmim.obj.bar.1"
+        "duplicates ok: rationale"
+    """
     comment = comment.strip()
     lower_comment = comment.lower()
     has_marker = (
@@ -409,7 +423,7 @@ def is_suppressed(comment: str, type_id: str) -> bool:
         lower_comment.startswith("duplicate ok")
         or lower_comment.startswith("duplicates ok")
     )
-    return has_gen_marker or (has_marker and type_id in comment)
+    return has_gen_marker or (has_marker and contains_type_id(comment, type_id))
 
 
 def duplicate_warnings(
