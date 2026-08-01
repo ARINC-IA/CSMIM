@@ -44,11 +44,11 @@ resources:
 
       Example: Some CSMIM endpoint registers a new object under the path
       "crew/galley/x5" with the object type "csmim.obj.galley.1" and the
-      supertype "csmim.obj.fault-report.1". That supertype has been configured
+      supertype "csmim.obj.bite-reporter.1". That supertype has been configured
       as a type of interest. Then, the directory service will publish a message
-      at the path "core/csmim/directory/csmim.obj/fault-report.1/crew/galley/x5"
-      with the payload ["csmim.obj.galley.1","csmim.obj.fault-report.1"].
+      at "core/csmim/directory/csmim.obj/bite-reporter.1/crew/galley/x5"
+      with the payload ["csmim.obj.galley.1","csmim.obj.bite-reporter.1"].
 
-      A client that wants to be informed about all objects that are derived from
-      "csmim.obj.fault-report.1" can subscribe the path
-      "core/csmim/directory/csmim.obj/fault-report.1/#".
+      A client that wants to be informed about all objects that are derived
+      from "csmim.obj.bite-reporter.1" can subscribe the path
+      "core/csmim/directory/csmim.obj/bite-reporter.1/#".
