@@ -25,6 +25,18 @@ using the same prefix. <br />
 files in the `types/` folder adjacent to each other. <br />
 *Example:* `csmim.obj.seat.1` and `csmim.obj.seat.actuator.1`
 
+Define a separate object type that aggregates the state for a collection of
+objects, when necessary. Use the plural for the object type identifier.
+Choose resource identifiers that indicate clearly how the state of the
+individual objects is aggregated. Make sure that resource identifiers cannot
+conflict with object instance identifiers that will be used in the object
+paths. Do not define resources that list or duplicate the individual
+objects (as is customary for REST interfaces, for example). <br />
+*Example:* `csmim.obj.doors.1` is the type that aggregates the state of all
+`csmim.obj.door.1` objects in a collection. A Boolean resource `all_closed`
+is the logical conjunction of all `is_closed` resources of the individual
+door objects.
+
 
 ## Resource Type Definitions
 
@@ -61,7 +73,7 @@ empty/invalid message has been received.
 
 Do not define `enum` values to represent failure conditions such as
 invalid sensor readings. Publish an empty message instead, overriding
-a previous retained message. Use the CSMIM fault reporting mechanism to
+a previously retained message. Use the CSMIM fault reporting mechanism to
 communicate details about the failure. <br />
 *Rationale:* Separate status publication from failure handling.
 
@@ -124,9 +136,15 @@ except for equipment IDs (e.g. Airbus FIN). <br />
 
 Use `.../<collection-name>/<instance-id>` as an object path element to capture a
 collection of similar objects. The collection name should be a plural noun.
-The instance ID will be defined by the aircraft manufacturer in many cases.
-<br />
+The instance ID will be defined by the aircraft manufacturer in many cases
+and must not collide with resource identifiers of a collection aggregate
+object, if there is one. <br />
 *Example:* `.../galleys/M5/gains/208` (two nested collections)
+
+If an additional object aggregates the state of the objects in a collection,
+put it at the path `.../<collection-name>`. <br />
+*Example:* One object with type `csmim.obj.doors.1` is placed at `.../doors`
+while the instances of type `csmim.obj.door.1` are placed at `.../doors/<id>`.
 
 
 ## Resource Value Update and Cleanup
