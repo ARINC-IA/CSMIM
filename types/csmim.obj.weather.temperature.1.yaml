@@ -1,0 +1,13 @@
+%YAML 1.2
+---
+id: csmim.obj.weather.temperature.1
+description: >
+  The temperature type provides weather data related to temperatures outside of
+  the aircraft.
+
+resources:
+  - id: static_air
+    type: float
+    mode: r
+    unit: °C
+    description: Outside air temperature

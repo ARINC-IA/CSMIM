@@ -1,0 +1,19 @@
+%YAML 1.2
+---
+id: csmim.obj.aircraft.door-state.1
+description: >
+  The aircraft doors state provides discrete value(s), sent as boolean,
+  indicating the state of the aircraft door(s). All messages in this type will
+  be sent with the MQTT retain flag set and are not expected to be periodic
+  messages.
+
+resources:
+  - id: is_closed
+    type: bool
+    mode: r
+    description: Indicates if door is closed and latched
+  - id: slide_armed
+    optional: true
+    type: bool
+    mode: r
+    description: Indicates if door slide is armed, if applicable

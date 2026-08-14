@@ -1,0 +1,20 @@
+%YAML 1.2
+---
+id: csmim.obj.time-triggers.1
+description: >
+  Time triggers provide a message at a defined period to allow CSMIM devices
+  to run triggered periodic operations. Time trigger resource messages are
+  sent with the MQTT retain flag set.
+
+resources:
+  - id: hour
+    type: uint
+    mode: r
+    description: The current hour using 24-hour notation, updated when
+      the hour changes
+
+  - id: minute
+    optional: true
+    type: uint
+    mode: r
+    description: The current minute, updated when the minute changes
