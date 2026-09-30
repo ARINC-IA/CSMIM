@@ -18,6 +18,18 @@ Define object types to capture one piece of functionality. <br />
 situation where the resources of one CSMIM object have to be provided by
 multiple hardware devices – which is complicated to achieve.
 
+Use separate type definitions and objects if the underlying entities are
+physically segregated or are likely to be segregated in a future system
+architecture. <br />
+*Rationale:* This prevents blocking future architectural segregation.
+Combining logically distinct physical entities into a single type creates
+tight coupling that is difficult to break later.
+
+Use supertypes to harmonize resources and attributes that can be clearly
+reused across various object types. <br />
+*Rationale:* This facilitates harmonization across the CSMIM data model and
+reduces redundant definitions for shared characteristics.
+
 Choose object type identifiers such that they are short yet with a low risk of
 naming conflicts with future object types. Group related object types by
 using the same prefix. <br />
