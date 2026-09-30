@@ -1,0 +1,20 @@
+%YAML 1.2
+---
+id: csmim.obj.aircraft.flight-guidance.1
+description: >
+  Flight guidance includes data about the current mission. This data is
+  generally provided by the autoflight guidance system(s).
+
+resources:
+  - id: time_to_destination
+    type: uint
+    mode: r
+    unit: s
+    description: Estimated time to arrival at destination in seconds
+
+  - id: distance_to_destination
+    optional: true
+    type: uint
+    mode: r
+    unit: km
+    description: Distance to the planned destination in kilometers

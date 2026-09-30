@@ -1,0 +1,19 @@
+%YAML 1.2
+---
+id: csmim.obj.weather.wind.1
+description: >
+  The wind weather type provides airdata type information.
+
+resources:
+  - id: speed
+    type: float
+    mode: r
+    unit: kts
+    description: Wind speed
+
+  - id: direction
+    optional: true
+    type: float
+    mode: r
+    unit: °
+    description: Wind direction relative to true north
