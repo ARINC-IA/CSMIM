@@ -1,0 +1,99 @@
+%YAML 1.2
+---
+id: csmim.obj.location.1
+description: >
+  CSMIM location service interface for physical/logical association of devices.
+  A deployment typically provides this service at "core/csmim/location".
+  Devices can query or retrieve location data from this service
+  and authorized tools can create, update and delete location assignments.
+
+  The service uses an identification tuple {"mfr","id"} to avoid identifier
+  conflicts between manufacturers. A location assignment is a dictionary
+  with a structure defined primarily by the aircraft or system integrator;
+  it may include multiple logical-unit references
+  and fields required by the device manufacturer, OEM or airline.
+
+resources:
+  - id: query
+    mode: x
+    type: dict
+    description: >
+      Retrieves location data for the identification data of a device.
+      The response contains the location data that was assigned using "set".
+      If no stored assignment exists, the location service sends a 404 response.
+      Access to this resource may be restricted to prevent querying data
+      of foreign manufacturers.
+    parameters:
+      - key: mfr
+        type: string
+        description: Manufacturer code of the device
+      - key: id
+        type: string
+        description: Device identifier assigned by the manufacturer
+
+  - id: set
+    mode: x
+    type: void
+    description: >
+      Creates or updates location data for a device identifier.
+      Access to this resource is typically restricted to authorized tools.
+    parameters:
+      - key: mfr
+        type: string
+        description: Manufacturer code of the device
+      - key: id
+        type: string
+        description: Device identifier assigned by the manufacturer
+      - key: location
+        type: dict
+        description: Location data in deployment-specific structure
+      - key: metadata
+        optional: true
+        type: dict
+        description: >
+          Additional administrative metadata associated with this location
+          assignment. This field can be used by the location assignment tool
+          to store data such as provenance or maintenance information.
+          The location service stores this data with the assignment
+          and returns it in "dump" responses only.
+
+  - id: delete
+    mode: x
+    type: void
+    description: >
+      Deletes location data for a device identifier.
+      If no stored assignment exists, the location service sends a 404 response.
+      Access to this resource is typically restricted to authorized tools.
+    parameters:
+      - key: mfr
+        type: string
+        description: Manufacturer code of the device
+      - key: id
+        type: string
+        description: Device identifier assigned by the manufacturer
+
+  - id: dump
+    mode: x
+    type: dict[]
+    description: >
+      Returns all stored assignments as an array of entries containing
+      identification data, location data, and metadata.
+      Access to this resource is typically restricted to authorized tools.
+    parameters:
+      - key: mfr
+        type: string
+        optional: true
+        description: Return only assignments with the given manufacturer code
+    dict-items:
+      - key: mfr
+        type: string
+      - key: id
+        type: string
+      - key: location
+        type: dict
+      - key: metadata
+        type: dict
+        optional: true
+      - key: modified_at
+        type: utc
+        description: Time of last modification of this location assignment

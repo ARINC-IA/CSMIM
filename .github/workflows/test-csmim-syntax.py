@@ -207,6 +207,14 @@ def test_resource_type(typeFile):
             assert resource["type"] != "void"
 
 
+# check that 'racc' is only used on readable resources
+def test_resource_racc_mode(typeFile):
+    content = load_object_type(typeFile)
+    for resource in content["resources"]:
+        if is_racc(resource):
+            assert resource["mode"] in {"r", "rw"}
+
+
 # helper function: returns a dictionary containing all resource IDs of the given
 # object type file, including those of all its supertypes
 def load_object_type_resources(yamlFile, visited):
