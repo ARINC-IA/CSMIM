@@ -1,0 +1,145 @@
+%YAML 1.2
+---
+id: csmim.obj.bite-interactive.1
+supertypes:
+  - csmim.obj.bite-reporter.1
+description: >
+  An entity that provides fault messages and triggered built-in tests.
+
+resources:
+  - id: bite_faults
+    type: dict[]
+    mode: r
+    description: >
+      List of faults. Ideally only one fault message per device.
+      Faults detected during interactive test must be marked with the
+      corresponding mode.
+    dict-items:
+      # key: root_fault_code  # from csmim.obj.bite-reporter.1
+      # key: 2nd_obj          # from csmim.obj.bite-reporter.1
+      # key: event_codes      # from csmim.obj.bite-reporter.1
+      # key: supplier_code    # from csmim.obj.bite-reporter.1
+      # key: text             # from csmim.obj.bite-reporter.1
+      # key: class            # from csmim.obj.bite-reporter.1
+      # key: priority         # from csmim.obj.bite-reporter.1
+      # key: time             # from csmim.obj.bite-reporter.1
+      - key: mode
+        optional: true
+        type: enum
+        description: >
+          In which mode the failure was detected.
+          Defaults to continuous_monitoring.
+        enum-values:
+          - name: continuous_monitoring
+            key: 0
+          - name: interactive_test
+            key: 1
+
+  # id: bite_data  # from csmim.obj.bite-reporter.1
+
+  - id: bite_tests
+    mode: r
+    type: dict[]
+    description: Interactive tests which are currently available on this entity.
+    dict-items:
+      - key: id
+        type: uint
+        description: Supplier-defined identifier of the test.
+      - key: name
+        type: string
+        description: Human-readable name of the test, for display in UI.
+      - key: description
+        optional: true
+        type: string
+        description: Human-readable explanation of the test and its purpose.
+      - key: available
+        optional: true
+        type: bool
+        description: Indicates if the test is currently executable. Defaults to true.
+
+  - id: bite_interactive
+    mode: x
+    type: uint
+    description: >
+      Starts an interactive test from the bite_tests list.
+      The response is a unique test execution ID.
+      If the test cannot be started, an error response must be given.
+      # tbd: should error-items be formalized in CSMIM?
+      If test execution is inhibited (403), an array of integers specifying
+      the exact conditions inhibiting the test shall be returned as "inhibit_codes".
+    parameters:
+      - key: command
+        type: enum
+        description: Which command to execute
+        enum-values:
+          - name: start
+            key: 1
+          - name: stop # or terminate? pause?
+            key: 2
+          - name: continue
+            key: 3
+      - key: test_id
+        type: uint
+        description: Identifier of a test listed in bite_tests.
+        # More parameters for test execution to be placed here!
+        # Add optional start time?
+      - key: user_response
+        type: string
+        optional: true
+        description: >
+          Input provided by the mechanic/user. Used when action is "continue" to release
+          the device from an "info" (wait) state.
+
+  - id: bite_status
+    mode: r
+    type: dict
+    description: >
+      Most recent status update for an interactive BITE test. The entity
+      publishes an update when a test starts, reports intermediate information,
+      or reaches a terminal state.
+      May also be required to publish regularly to avoid test execution timeout.
+    dict-items:
+      - key: exec_id
+        type: uint
+        description: Test execution identifier returned by bite_start.
+      - key: test_id
+        type: uint
+        description: Identifier of the test in bite_tests being executed.
+      - key: state
+        type: enum
+        description: Current execution state.
+        enum-values:
+          - name: running
+            key: 1
+          - name: completed
+            key: 2
+          - name: aborted
+            key: 3
+            description: If the device itself had to abort test execution.
+          - name: stopped
+            key: 4
+            description: If the test was commanded to "stop".
+          - name: info
+            description: >
+              Paused/Wait state. The device reports specific test parameters or instructions
+              and suspends test execution. It waits for a 'continue' command with 'user_response'
+              from the BITE Coordinator to resume.
+            # Plus "scheduled"?
+      # Human-readable status text to be placed here?
+      # Do we need a time stamp, e.g. exact time of completion?
+      - key: result
+        optional: true
+        type: enum
+        description: Test result upon completion.
+        enum-values:
+          - name: ok
+            key: 1
+          - name: nok  # ko?
+            key: 2
+          - name: done
+            key: 3
+      - key: output
+        optional: true
+        type: bytes
+        description: >
+          Test-specific intermediate or final output.
