@@ -52,6 +52,10 @@ resources:
         optional: true
         type: string
         description: Human-readable explanation of the test and its purpose.
+      - key: available
+        optional: true
+        type: bool
+        description: Indicates if the test is currently executable. Defaults to true.
 
   - id: bite_interactive
     mode: x
@@ -60,6 +64,9 @@ resources:
       Starts an interactive test from the bite_tests list.
       The response is a unique test execution ID.
       If the test cannot be started, an error response must be given.
+      # tbd: should error-items be formalized in CSMIM?
+      If test execution is inhibited (403), an array of integers specifying
+      the exact conditions inhibiting the test shall be returned as "inhibit_codes".
     parameters:
       - key: command
         type: enum
@@ -67,13 +74,21 @@ resources:
         enum-values:
           - name: start
             key: 1
-          - name: stop
+          - name: stop # or terminate? pause?
             key: 2
+          - name: continue
+            key: 3
       - key: test_id
         type: uint
         description: Identifier of a test listed in bite_tests.
         # More parameters for test execution to be placed here!
         # Add optional start time?
+      - key: user_response
+        type: string
+        optional: true
+        description: >
+          Input provided by the mechanic/user. Used when action is "continue" to release
+          the device from an "info" (wait) state.
 
   - id: bite_status
     mode: r
@@ -104,6 +119,11 @@ resources:
           - name: stopped
             key: 4
             description: If the test was commanded to "stop".
+          - name: info
+            description: >
+              Paused/Wait state. The device reports specific test parameters or instructions
+              and suspends test execution. It waits for a 'continue' command with 'user_response'
+              from the BITE Coordinator to resume.
             # Plus "scheduled"?
       # Human-readable status text to be placed here?
       # Do we need a time stamp, e.g. exact time of completion?
