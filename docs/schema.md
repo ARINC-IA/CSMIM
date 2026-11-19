@@ -14,7 +14,7 @@ Knowledge Base. The CSMIM Schema therefore uses YAML, too.
 
 ## Schema applicability
 
-There are 3 places where a CSMIM Schema occurs in an object type definition.
+There are 4 places where a CSMIM Schema occurs in an object type definition.
 Consider the following example:
 
 ```yaml
@@ -35,10 +35,15 @@ resources:
     
     type: string
     # Put schema here to specify response
+    
+    errors:
+      - code: 400
+        # Put dict-items schema here to specify error response
 ```
 
 As you can see from the above example, the schema can be put wherever a
-CSMIM data type is defined.
+CSMIM data type is defined; with error responses implicitly having
+the data type `dict`.
 
 
 ## Schema definitions
