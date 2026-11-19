@@ -22,6 +22,51 @@ resources:
       registration yet, or the registration data differs from the previous full
       registration. In both cases, the client must have set "cleanSession=true"
       in its MQTT CONNECT message.
+    errors:
+      - code: 400
+        description: >
+          The request header or payload contains an error. The server should
+          not retry the same registration request.
+      - code: 403
+        description: >
+          At least one object could not be registered because the server does
+          not possess "create" permission for its path. The server should not
+          retry the same registration request; it may send a request without
+          the offending object.
+        dict-items:
+          - key: path
+            type: string
+            description: One object path which produced the error
+      - code: 409
+        description: >
+          At least one object could not be registered because its path has
+          already been registered by another server; because its path equals or
+          lies inside the path of a resource registered by another server; or
+          because the path of one of its resources equals or contains an object
+          registered by another server. The server may retry the same request
+          after waiting for a certain time. Persistent errors indicate a
+          configuration problem.
+        dict-items:
+          - key: path
+            type: string
+            description: One object path which produced the error
+      - code: 413
+        description: >
+          The number of objects or resources to be registered exceeded the
+          limit defined by the system integrator. The server should not retry
+          the same registration request.
+      - code: 429
+        description: >
+          The server has sent too many registration requests in a given amount
+          of time. Upon this error code, the server must reduce its request
+          rate.
+      - code: 503
+        description: >
+          Registration is currently not possible. This may mean the CSMIM
+          installation only allows registration in dedicated phases, for
+          example on ground or during maintenance. The server should try
+          registration renewal instead. If that is not possible, it may retry
+          the same request after waiting for a certain time.
     parameters:
       - key: etag
         type: bytes

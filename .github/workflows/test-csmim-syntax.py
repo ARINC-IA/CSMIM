@@ -207,6 +207,18 @@ def test_resource_type(typeFile):
             assert resource["type"] != "void"
 
 
+# check resource error response codes and payload items
+def test_resource_errors(typeFile):
+    content = load_object_type(typeFile)
+    for resource in content["resources"]:
+        errors = resource.get("errors", [])
+        codes = [error["code"] for error in errors]
+        assert len(codes) == len(set(codes))
+        for error in errors:
+            for item in error.get("dict-items", []):
+                assert item["key"] != "error"
+
+
 # helper function: returns a dictionary containing all resource IDs of the given
 # object type file, including those of all its supertypes
 def load_object_type_resources(yamlFile, visited):

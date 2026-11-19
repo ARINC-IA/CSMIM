@@ -19,6 +19,7 @@ resource:
   racc: bool(required=False)
   attributes: list(include('attribute'), required=False)
   parameters: list(include('dict_item'), required=False)
+  errors: list(include('error_response'), required=False)
   type: include('data_type')
   description: str()
   unit: str(required=False)
@@ -47,6 +48,11 @@ dict_item:
   optional: bool(required=False)
   enum-values: list(include('enum_value'), required=False)
   array-items: include('array_item', required=False)
+  dict-items: list(include('dict_item'), required=False)
+
+error_response:
+  code: int(min=400, max=599)
+  description: str(required=False)
   dict-items: list(include('dict_item'), required=False)
 
 data_type: enum(
